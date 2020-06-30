@@ -1,3 +1,8 @@
+[![GitHub issues](https://img.shields.io/github/issues/WardPearce/OBRequests)](https://github.com/WardPearce/OBRequests/issues)
+[![GitHub license](https://img.shields.io/github/license/WardPearce/OBRequests)](https://github.com/WardPearce/OBRequests/blob/master/LICENSE)
+[![Actions Status](https://github.com/WardPearce/OBRequests/workflows/Python%20application/badge.svg)](https://github.com/WardPearce/OBRequests/actions)
+
+
 ##### This library is due to change in future version but is considered stable.
 ##### For now it's recommend lock this package to 0.0.1
 
