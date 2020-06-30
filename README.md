@@ -1,3 +1,6 @@
+##### This library is due to change in future version but is considered stable.
+##### For now it's recommend lock this package to 0.0.1
+
 ## Index
 - [OBRequests](#OBRequests)
 - [Todo](#Todo)
