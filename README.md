@@ -2,11 +2,15 @@
 ##### For now it's recommend lock this package to 0.0.1
 
 ## Index
+- [Install](#Install)
 - [OBRequests](#OBRequests)
 - [Todo](#Todo)
 - [Using](#Using)
 - [Example](#Example)
 
+## Install
+- Pypi: ``pip3 install OBRequests``
+- Git: ``pip3 install git+https://github.com/WardPearce/OBRequests.git``
 
 ## OBRequests
 Object-based request library, may the force be with you. OBRequests is built using [HTTPX](https://www.python-httpx.org/).
