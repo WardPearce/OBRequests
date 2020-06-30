@@ -14,7 +14,7 @@ class Requests:
                     self.func_params[key] = param
                 else:
                     route_params[
-                        key.replace("_", "")
+                        key[1:]
                     ] = param
 
             if route_params:
