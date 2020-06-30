@@ -73,7 +73,7 @@ if resp.status_code == 200:
     )
 ```
 
-You an pass parameters like [this](https://www.python-httpx.org/api/#request) by doing this
+You can pass request parameters like [this](https://www.python-httpx.org/api/#request) by doing this
 
 ```python
 class JsonPlaceHolder(Request):
