@@ -3,7 +3,7 @@
 [![Actions Status](https://github.com/WardPearce/OBRequests/workflows/Python%20application/badge.svg)](https://github.com/WardPearce/OBRequests/actions)
 
 
-##### This library is due to change in future version but is considered stable.
+##### This library is due to change in future versions but is considered stable.
 ##### For now it's recommend lock this package to 0.0.1
 
 ## Index
