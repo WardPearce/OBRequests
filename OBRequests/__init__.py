@@ -8,7 +8,7 @@ from .requests import Requests
 __version__ = "0.0.1"
 
 
-class OBRequest:
+class Request:
     __client = None
 
     _base_url = None
@@ -22,7 +22,7 @@ class OBRequest:
             if not callable(getattr(self.__class__, attr))
             and attr.startswith("_")
             and not attr.startswith("__")
-            and OBRequest.__name__ not in attr
+            and Request.__name__ not in attr
         ]
 
         global_params = {}
