@@ -1,4 +1,4 @@
-from OBRequests import Request, Methods
+from OBRequests import Request, Methods, RespFunction
 from OBRequests.method import Get
 from OBRequests.response import Json
 
@@ -7,17 +7,24 @@ class FooBar(Exception):
     pass
 
 
+def test_func(value):
+    return value
+
+
 test = Request(
     "https://jsonplaceholder.typicode.com",
     comment=Methods(
-        "comments/{something}",
+        "comments/{id}",
         [
             Get(
                 _resp_actions={
                     200: Json
                 },
-                _resp_exceptions={
-                    404: FooBar
+                _resp_functions={
+                    404: RespFunction(
+                        test_func,
+                        value="Got 404d"
+                    )
                 }
             )
         ]
@@ -38,7 +45,9 @@ test = Request(
 )
 
 try:
-    print(test.posts.get())
+    print(test.comment.get(
+        _id=1
+    ))
 except FooBar:
     print("Worked")
 else:

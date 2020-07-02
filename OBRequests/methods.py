@@ -1,9 +1,9 @@
 from .method import Get, Post, Head, Options, \
     Put, Patch, Delete
 
-from .response import Json
+from .response import Json, Read
 
-from .exceptions import InvalidMethod
+from .exceptions import InvalidMethod, InvalidResponse
 
 
 class Methods:
@@ -45,78 +45,117 @@ class Methods:
             else:
                 raise InvalidMethod()
 
-    def _determine(self, request, method):
+    def _determine(self, request, method, kwargs):
         """ Determines the correct response
             or exception to raise.
         """
 
-        resp = request(
-            self.prefix,
-            **method.kwargs
-        )
+        additional_params = {}
+        path_params = {}
+        for name, value in kwargs.items():
+            if name.startswith("_"):
+                path_params[name[1:]] = value
+            else:
+                additional_params[name] = value
 
-        if resp.status_code in method._resp_actions:
+        if path_params:
+            route = self.prefix.format(**path_params)
+        else:
+            route = self.prefix
+
+        if additional_params:
+            resp = request(
+                route,
+                **{**method.kwargs, **additional_params}
+            )
+        else:
+            resp = request(
+                route,
+                **method.kwargs
+            )
+
+        if method._resp_actions and \
+                resp.status_code in method._resp_actions:
             if method._resp_actions[
                 resp.status_code
             ] == Json:
                 return resp.json()
-        elif resp.status_code in method._resp_exceptions:
+            elif method._resp_actions[
+                resp.status_code
+            ] == Read:
+                return resp.read()
+            else:
+                raise InvalidResponse()
+        elif method._resp_exceptions and \
+                resp.status_code in method._resp_exceptions:
             raise method._resp_exceptions[resp.status_code]()
+        elif method._resp_functions and \
+                resp.status_code in method._resp_functions:
+            return method._resp_functions[resp.status_code].func(
+                **method._resp_functions[resp.status_code].kwargs
+            )
 
         return resp
 
-    def _post(self):
+    def _post(self, **kwargs):
         """ Post Request. """
 
         return self._determine(
             self._client.post,
-            self._post_method
+            self._post_method,
+            kwargs
         )
 
-    def _get(self):
+    def _get(self, **kwargs):
         """ Get request. """
 
         return self._determine(
             self._client.get,
-            self._get_method
+            self._get_method,
+            kwargs
         )
 
-    def _head(self):
+    def _head(self, **kwargs):
         """ Head request. """
 
         return self._determine(
             self._client.head,
-            self._get_method
+            self._get_method,
+            kwargs
         )
 
-    def _options(self):
+    def _options(self, **kwargs):
         """ Options request. """
 
         return self._determine(
             self._client.options,
-            self._get_method
+            self._get_method,
+            kwargs
         )
 
-    def _put(self):
+    def _put(self, **kwargs):
         """ Put request. """
 
         return self._determine(
             self._client.put,
-            self._get_method
+            self._get_method,
+            kwargs
         )
 
-    def _patch(self):
+    def _patch(self, **kwargs):
         """ Patch request. """
 
         return self._determine(
             self._client.patch,
-            self._get_method
+            self._get_method,
+            kwargs
         )
 
-    def _delete(self):
+    def _delete(self, **kwargs):
         """ Delete request. """
 
         return self._determine(
             self._client.delete,
-            self._get_method
+            self._get_method,
+            kwargs
         )
