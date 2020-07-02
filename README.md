@@ -1,5 +1,13 @@
+[![GitHub issues](https://img.shields.io/github/issues/WardPearce/OBRequests)](https://github.com/WardPearce/OBRequests/issues)
+[![GitHub license](https://img.shields.io/github/license/WardPearce/OBRequests)](https://github.com/WardPearce/OBRequests/blob/master/LICENSE)
+[![Actions Status](https://github.com/WardPearce/OBRequests/workflows/Python%20application/badge.svg)](https://github.com/WardPearce/OBRequests/actions)
+
 # About
 OBRequests is a object-based request library for HTTP built on top of HTTPX. It's feature rich, easy to use & fast. Currently supports all major request methods & has plans to add asyncio support.
+
+# Install
+- Pypi: ``pip3 install OBRequests``
+- Git: ``pip3 install git+https://github.com/WardPearce/OBRequests.git``
 
 # So how does it work?
 You can read the full documentation [here](/DOCS.md) and find more detailed examples in the tests folder.
