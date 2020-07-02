@@ -1,6 +1,6 @@
 from OBRequests import Request, Methods, RespFunction
 from OBRequests.method import Get
-from OBRequests.response import Json
+from OBRequests.response import Json, Read
 
 
 class FooBar(Exception):
@@ -17,6 +17,7 @@ test = Request(
         "comments/{id}",
         [
             Get(
+                _id=1,
                 _resp_actions={
                     200: Json
                 },
@@ -34,7 +35,7 @@ test = Request(
         [
             Get(
                 _resp_actions={
-                    200: Json
+                    200: Read
                 },
                 _resp_exceptions={
                     404: FooBar
@@ -46,7 +47,7 @@ test = Request(
 
 try:
     print(test.comment.get(
-        _id=1
+        _id=2
     ))
 except FooBar:
     print("Worked")

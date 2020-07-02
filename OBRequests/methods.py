@@ -18,6 +18,15 @@ class Methods:
     _delete_method = None
 
     def __init__(self, prefix: str, methods: list):
+        """ Pass different Methods for a prefix.
+
+            prefix: str
+                To prefix the add to the base
+                url, e.g. https://.../<prefix goes after this>.
+            methods: list
+                List of methods, e.g. get, post etc.
+        """
+
         self.prefix = prefix
 
         for method in methods:
@@ -60,6 +69,8 @@ class Methods:
 
         if path_params:
             route = self.prefix.format(**path_params)
+        elif method.path_params:
+            route = self.prefix.format(**method.path_params)
         else:
             route = self.prefix
 

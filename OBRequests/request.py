@@ -3,6 +3,13 @@ import httpx
 
 class Request:
     def __init__(self, base_url: str, **kwargs):
+        """ Request wrapper.
+
+            base_url: str
+                Base url for requests.
+            kwargs:
+                Methods to create.
+        """
 
         if base_url[:-1] != "/":
             base_url += "/"
