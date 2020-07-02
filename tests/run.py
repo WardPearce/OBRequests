@@ -26,6 +26,9 @@ test = Request(
                         test_func,
                         value="Got 404d"
                     )
+                },
+                headers={
+                    "Authorization": "api_key"
                 }
             )
         ]
