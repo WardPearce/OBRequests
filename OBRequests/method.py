@@ -28,7 +28,7 @@ class MethodModel:
                 )
             }
         kwargs:
-            Different paramters to pass to the request.
+            Different parameters to pass to the request.
         """
 
         self.resp_actions = resp_actions

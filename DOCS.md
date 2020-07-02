@@ -2,7 +2,10 @@
 - [Hierarchy](#hierarchy)
 - [Request](#request)
 - [Methods](#methods)
+- [Method](#method)
 - [Response](#response)
+- [RespFunction](#RespFunction)
+- [Exceptions](#exceptions)
 
 ## Hierarchy
 - Request
@@ -66,8 +69,43 @@ EXAMPLE.comments.get(_id=1)
 - resp_functions: dict
     - Dictionary of RespFunction(s).
 
+
+## Method
+- resp_actions: dict
+    - Dictionary of actions.
+- resp_exceptions: dict
+    - Dictionary of exceptions to raise.
+- resp_functions: dict
+    - Dictionary of RespFunction(s).
+- kwargs:
+    - Different parameters to pass to the request.
+
 ## Response
 - Json
     - Attempt to read response as json.
 - Read
     - Read response.
+
+## RespFunction
+- func
+    - Function to call.
+- kwargs
+    - Parameters to pass.
+
+## Exceptions
+```python
+class InvalidMethod(Exception):
+    """ Raised when the given method
+        Isn't understood by OBRequests.
+    """
+
+    pass
+
+
+class InvalidResponse(Exception):
+    """ Raised when OBRequests doesn't
+        Understand the response object.
+    """
+
+    pass
+```
