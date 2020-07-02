@@ -1,4 +1,5 @@
 # Index
+- [Important Details](#important-details)
 - [Hierarchy](#hierarchy)
 - [Request](#request)
 - [Methods](#methods)
@@ -7,6 +8,11 @@
 - [RespFunction](#RespFunction)
 - [Exceptions](#exceptions)
 - [Supported methods](support-methods)
+
+## Important Details
+- Pathway parameters always start with a underscore ('_').
+- Pathway parameters can only be passed inside methods.
+- Methods are defined using a double underscore ('__').
 
 ## Hierarchy
 - Request
