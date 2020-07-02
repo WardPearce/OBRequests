@@ -109,3 +109,12 @@ class InvalidResponse(Exception):
 
     pass
 ```
+
+## Support methods
+- Get
+- Post
+- Head
+- Options
+- Put
+- Patch
+- Delete
