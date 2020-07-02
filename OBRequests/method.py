@@ -2,7 +2,6 @@ class MethodModel:
     def __init__(self, resp_actions: dict = None,
                  resp_exceptions: dict = None,
                  resp_functions: dict = None, **kwargs):
-
         """
         resp_actions: dict
             Dictionary of response actions to do at

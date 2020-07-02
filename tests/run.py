@@ -55,9 +55,6 @@ try:
     print(test.comment.get(
         _id=2
     ))
-    print(
-        test.posts.get()
-    )
 except FooBar:
     print("Some expection")
 else:

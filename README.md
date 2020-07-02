@@ -2,7 +2,7 @@
 OBRequests is a object-based request library for HTTP built on top of HTTPX. It's feature rich, easy to use & fast. Currently supports all major request methods & has plans to add asyncio support.
 
 # So how does it work?
-You can read the full documentation [here]() and find more detailed examples in the tests folder.
+You can read the full documentation [here](/DOCS.md) and find more detailed examples in the tests folder.
 
 Here is a basic look at OBRequests.
 ```python

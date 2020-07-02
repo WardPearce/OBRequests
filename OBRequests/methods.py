@@ -33,6 +33,12 @@ class Methods:
                 url, e.g. https://.../<prefix goes after this>.
             methods: list
                 List of methods, e.g. get, post etc.
+            resp_actions: dict
+                Method response actions.
+            resp_exceptions: dict
+                Method response exceptions.
+            resp_functions: dict
+                Method functions.
         """
 
         self.methods = methods
