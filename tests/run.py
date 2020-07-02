@@ -1,26 +1,61 @@
-from OBRequests import Request
+from OBRequests import Request, Methods, RespFunction
+from OBRequests.method import Get
+from OBRequests.response import Json, Read
 
 
-class TestReqest(Request):
-    _base_url = "https://jsonplaceholder.typicode.com"
-
-    GET_posts = "posts"
-    GET_comment = "comments"
+class FooBar(Exception):
+    pass
 
 
-request = TestReqest()
+def test_func(value):
+    return value
 
-# resp = request.GET_posts()
-# if resp.status_code == 200:
-#     print(
-#         resp.json()
-#     )
 
-resp = request.GET_comment()
-print(resp.url)
-if resp.status_code == 200:
-    print(
-        resp.json()
+test = Request(
+    "https://jsonplaceholder.typicode.com",
+    resp_actions={
+        200: Json
+    },
+    headers={
+        "Authorization": "api_key"
+    },
+    __comment=Methods(
+        "comments/{id}",
+        [
+            Get(
+                _id=1,
+                resp_functions={
+                    404: RespFunction(
+                        test_func,
+                        value="Got 404d"
+                    )
+                }
+            )
+        ],
+    ),
+    __posts=Methods(
+        "posts",
+        [
+            Get(
+                resp_actions={
+                    200: Read
+                },
+                resp_exceptions={
+                    404: FooBar
+                },
+                headers={
+                    "Authorization": "Different_key_for_some_reason"
+                }
+            )
+        ]
     )
+)
+
+try:
+    print(test.comment.get(
+        _id=2
+    ))
+except FooBar:
+    print("Some expection")
 else:
-    print("Invalid url")
+    print(":)")
