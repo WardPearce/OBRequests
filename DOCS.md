@@ -6,6 +6,7 @@
 - [Response](#response)
 - [RespFunction](#RespFunction)
 - [Exceptions](#exceptions)
+- [Supported methods](support-methods)
 
 ## Hierarchy
 - Request
