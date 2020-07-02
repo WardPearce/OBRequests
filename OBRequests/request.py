@@ -17,6 +17,13 @@ class Request:
 
                 Any kwargs will be treated as a httpx.Client parameter.
                 https://www.python-httpx.org/api/#client
+
+            resp_actions: dict
+                Global response actions.
+            resp_exceptions: dict
+                Global response exceptions.
+            resp_functions: dict
+                Global functions.
         """
 
         if base_url[:-1] != "/":
