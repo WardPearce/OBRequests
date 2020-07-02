@@ -8,6 +8,7 @@ from .exceptions import InvalidMethod, InvalidResponse
 
 class Methods:
     _client = None
+    _methods = None
 
     _get_method = None
     _post_method = None
@@ -17,7 +18,14 @@ class Methods:
     _patch_method = None
     _delete_method = None
 
-    def __init__(self, prefix: str, methods: list):
+    _global_resp_actions = None
+    _global_resp_exceptions = None
+    _global_resp_functions = None
+
+    def __init__(self, prefix: str, methods: list,
+                 resp_actions: dict = None,
+                 resp_exceptions: dict = None,
+                 resp_functions: dict = None):
         """ Pass different Methods for a prefix.
 
             prefix: str
@@ -27,9 +35,35 @@ class Methods:
                 List of methods, e.g. get, post etc.
         """
 
+        self.methods = methods
         self.prefix = prefix
 
-        for method in methods:
+        self.resp_actions = resp_actions
+        self.resp_exceptions = resp_exceptions
+        self.resp_functions = resp_functions
+
+    def _process(self):
+        """ Processes all paramters. """
+
+        for method in self.methods:
+            if method.resp_actions is None:
+                if self.resp_actions:
+                    method.resp_actions = self.resp_actions
+                else:
+                    method.resp_actions = self._global_resp_actions
+
+            if method.resp_exceptions is None:
+                if self.resp_exceptions:
+                    method.resp_exceptions = self.resp_exceptions
+                else:
+                    method.resp_exceptions = self._global_resp_exceptions
+
+            if method.resp_functions is None:
+                if self.resp_functions:
+                    method.resp_functions = self.resp_functions
+                else:
+                    method.resp_functions = self._global_resp_functions
+
             if isinstance(method, Get):
                 self._get_method = method
                 self.get = self._get
@@ -52,7 +86,8 @@ class Methods:
                 self._delete_method = method
                 self.delete = self.delete
             else:
-                raise InvalidMethod()
+                raise InvalidMethod("""{} isn't a method
+                                    what I understand""".format(method))
 
     def _determine(self, request, method, kwargs):
         """ Determines the correct response
@@ -85,25 +120,25 @@ class Methods:
                 **method.kwargs
             )
 
-        if method._resp_actions and \
-                resp.status_code in method._resp_actions:
-            if method._resp_actions[
+        if method.resp_actions and \
+                resp.status_code in method.resp_actions:
+            if method.resp_actions[
                 resp.status_code
             ] == Json:
                 return resp.json()
-            elif method._resp_actions[
+            elif method.resp_actions[
                 resp.status_code
             ] == Read:
                 return resp.read()
             else:
                 raise InvalidResponse()
-        elif method._resp_exceptions and \
-                resp.status_code in method._resp_exceptions:
-            raise method._resp_exceptions[resp.status_code]()
-        elif method._resp_functions and \
-                resp.status_code in method._resp_functions:
-            return method._resp_functions[resp.status_code].func(
-                **method._resp_functions[resp.status_code].kwargs
+        elif method.resp_exceptions and \
+                resp.status_code in method.resp_exceptions:
+            raise method.resp_exceptions[resp.status_code]()
+        elif method.resp_functions and \
+                resp.status_code in method.resp_functions:
+            return method.resp_functions[resp.status_code].func(
+                **method.resp_functions[resp.status_code].kwargs
             )
 
         return resp

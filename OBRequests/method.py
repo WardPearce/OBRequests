@@ -1,22 +1,22 @@
 class MethodModel:
-    def __init__(self, _resp_actions: dict = None,
-                 _resp_exceptions: dict = None,
-                 _resp_functions: dict = None, **kwargs):
+    def __init__(self, resp_actions: dict = None,
+                 resp_exceptions: dict = None,
+                 resp_functions: dict = None, **kwargs):
 
         """
-        _resp_actions: dict
+        resp_actions: dict
             Dictionary of response actions to do at
             different status codes.
             e.g. {200: Json, 404: Read}.
-        _resp_exceptions: dict
+        resp_exceptions: dict
             Dictionary of response exceptions to
             raise at different status codes.
             e.g. {404: NotImplemented}.
-        _resp_functions: dict
+        resp_functions: dict
             Dictionary of response functions to
             call at different status codes.
 
-            _resp_functions should have values of
+            resp_functions should have values of
             RespFunction(
                     func,
                     **kwargs
@@ -32,9 +32,9 @@ class MethodModel:
             Different paramters to pass to the request.
         """
 
-        self._resp_actions = _resp_actions
-        self._resp_exceptions = _resp_exceptions
-        self._resp_functions = _resp_functions
+        self.resp_actions = resp_actions
+        self.resp_exceptions = resp_exceptions
+        self.resp_functions = resp_functions
 
         self.kwargs = {}
         self.path_params = {}

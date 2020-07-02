@@ -13,36 +13,39 @@ def test_func(value):
 
 test = Request(
     "https://jsonplaceholder.typicode.com",
-    comment=Methods(
+    resp_actions={
+        200: Json
+    },
+    headers={
+        "Authorization": "api_key"
+    },
+    __comment=Methods(
         "comments/{id}",
         [
             Get(
                 _id=1,
-                _resp_actions={
-                    200: Json
-                },
-                _resp_functions={
+                resp_functions={
                     404: RespFunction(
                         test_func,
                         value="Got 404d"
                     )
-                },
-                headers={
-                    "Authorization": "api_key"
                 }
             )
-        ]
+        ],
     ),
-    posts=Methods(
+    __posts=Methods(
         "posts",
         [
             Get(
-                _resp_actions={
+                resp_actions={
                     200: Read
                 },
-                _resp_exceptions={
+                resp_exceptions={
                     404: FooBar
                 },
+                headers={
+                    "Authorization": "Different_key_for_some_reason"
+                }
             )
         ]
     )
@@ -53,6 +56,6 @@ try:
         _id=2
     ))
 except FooBar:
-    print("Worked")
+    print("Some expection")
 else:
     print(":)")
