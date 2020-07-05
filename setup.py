@@ -35,6 +35,7 @@ setup(
     license='GPL v3',
     packages=[
         'OBRequests',
+        'OBRequests.request_types',
     ],
     python_requires='>=3.6',
     include_package_data=True,

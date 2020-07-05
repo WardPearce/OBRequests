@@ -32,6 +32,9 @@
     - Dictionary of exceptions to raise.
 - resp_functions: dict
     - Dictionary of RespFunction(s).
+- awaiting: bool
+    - If the async httpx client should be used.
+        - If enabled all calls must be awaited within context of the event loop.
 - kwargs
     - Pass httpx.Client parameters.
     - Pass routes with a double underscore '__'.
@@ -42,9 +45,12 @@ from OBRequests import Request, Methods
 from OBRequests.method import Get
 from OBRequests.response import Json
 
+import asyncio
+
 
 EXAMPLE = Request(
     "https://jsonplaceholder.typicode.com",
+    awaiting=True,
     resp_actions={
         200: Json
     },
@@ -61,7 +67,11 @@ EXAMPLE = Request(
     ),
 )
 
-EXAMPLE.comments.get(_id=1)
+async def example_async():
+    await EXAMPLE.comments.get(_id=1)
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(example_async())
 ```
 
 ## Methods

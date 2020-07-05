@@ -2,6 +2,8 @@ from OBRequests import Request, Methods, RespFunction
 from OBRequests.method import Get
 from OBRequests.response import Json, Read
 
+import asyncio
+
 
 class FooBar(Exception):
     pass
@@ -13,6 +15,7 @@ def test_func(value):
 
 test = Request(
     "https://jsonplaceholder.typicode.com",
+    awaiting=True,
     resp_actions={
         200: Json
     },
@@ -51,11 +54,17 @@ test = Request(
     )
 )
 
-try:
-    print(test.comment.get(
-        _id=2
-    ))
-except FooBar:
-    print("Some expection")
-else:
-    print(":)")
+
+async def test_async():
+    try:
+        print(await test.comment.get(
+            _id=2
+        ))
+    except FooBar:
+        print("Some expection")
+    else:
+        print(":)")
+
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(test_async())

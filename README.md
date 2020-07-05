@@ -3,7 +3,7 @@
 [![Actions Status](https://github.com/WardPearce/OBRequests/workflows/Python%20application/badge.svg)](https://github.com/WardPearce/OBRequests/actions)
 
 # About
-OBRequests is a object-based request library for HTTP built on top of HTTPX. It's feature rich, easy to use & fast. Currently supports all major request methods & has plans to add asyncio support.
+OBRequests is a object-based request library for HTTP built on top of HTTPX. It's feature rich, easy to use & fast. Currently supports all major request methods & also includes asyncio support.
 
 # Install
 - Pypi: ``pip3 install OBRequests``
@@ -24,6 +24,9 @@ from OBRequests.response import Json
 typicode_api = Request(
     # Here we're setting the base url.
     "https://jsonplaceholder.typicode.com",
+
+    # Here we're setting the client to synchronous and not asynchronous.
+    awaiting=False,
 
     # Here we're setting a global response action.
     # Basically saying if we get the status code 200

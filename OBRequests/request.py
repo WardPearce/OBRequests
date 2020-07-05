@@ -6,6 +6,7 @@ class Request:
                  resp_actions: dict = None,
                  resp_exceptions: dict = None,
                  resp_functions: dict = None,
+                 awaiting: bool = False,
                  **kwargs):
         """ Request wrapper.
 
@@ -34,10 +35,22 @@ class Request:
             if not name.startswith("_") and not name.startswith("__"):
                 client_params[name] = value
 
-        client = httpx.Client(base_url=base_url, **client_params)
+        if not awaiting:
+            async_client = None
+            client = httpx.Client(
+                base_url=base_url,
+                **client_params
+            )
+        else:
+            async_client = httpx.AsyncClient(
+                base_url=base_url,
+                **client_params
+            )
+            client = None
 
         for name, value in kwargs.items():
             if name.startswith("__"):
+                value._async_client = async_client
                 value._client = client
 
                 if resp_actions:
