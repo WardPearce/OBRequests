@@ -104,8 +104,10 @@ loop.run_until_complete(example_async())
     - Read response.
 
 ## RespFunction
-- func
+- func: coro
     - Function to call.
+- awaiting: bool
+    - If the function is awaiting, only works for awaiting requests.
 - kwargs
     - Parameters to pass.
 
