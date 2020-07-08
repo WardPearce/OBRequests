@@ -1,8 +1,31 @@
+from ..method import MethodModel
+
+
 class RequestsBase:
-    def __init__(self, obj):
+    def __init__(self, obj) -> None:
+        """
+        Base for requests.
+
+        Attributes
+        ----------
+        obj:
+            Initialized method.
+        """
+
         self.obj = obj
 
-    def _format_route(self, kwargs, method):
+    def _format_route(self, kwargs: dict, method: MethodModel) -> dict:
+        """
+        Formats routes.
+
+        Attributes
+        ----------
+        kwargs: dict
+            Kwargs to format.
+        method: MethodModel
+            Method data.
+        """
+
         additional_params = {}
         path_params = {}
         for name, value in kwargs.items():

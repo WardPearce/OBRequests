@@ -7,7 +7,7 @@ class Request:
                  resp_exceptions: dict = None,
                  resp_functions: dict = None,
                  awaiting: bool = False,
-                 **kwargs):
+                 **kwargs) -> None:
         """ Request wrapper.
 
             base_url: str
@@ -27,14 +27,18 @@ class Request:
                 Global functions.
         """
 
+        # Adds '/' to end of base
+        # url if missing.
         if base_url[:-1] != "/":
             base_url += "/"
 
+        # Getting client parameters.
         client_params = {}
         for name, value in kwargs.items():
             if not name.startswith("_") and not name.startswith("__"):
                 client_params[name] = value
 
+        # Determining what httpx client to use.
         if not awaiting:
             async_client = None
             client = httpx.Client(
@@ -48,11 +52,15 @@ class Request:
             )
             client = None
 
+        # Sets variables need for requests.
         for name, value in kwargs.items():
             if name.startswith("__"):
+                # Passing the client to the method.
                 value._async_client = async_client
                 value._client = client
 
+                # Determining if the global parameters
+                # show be set.
                 if resp_actions:
                     value._global_resp_actions = resp_actions
 
@@ -62,8 +70,10 @@ class Request:
                 if resp_functions:
                     value._global_resp_functions = resp_functions
 
+                # Processing passed parameters.
                 value._process()
 
+                # Setting attribute.
                 setattr(
                     self,
                     name[2:],

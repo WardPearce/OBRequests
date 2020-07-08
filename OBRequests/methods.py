@@ -28,20 +28,21 @@ class Methods:
     def __init__(self, prefix: str, methods: list,
                  resp_actions: dict = None,
                  resp_exceptions: dict = None,
-                 resp_functions: dict = None):
-        """ Pass different Methods for a prefix.
+                 resp_functions: dict = None) -> None:
+        """
+        Pass different Methods for a prefix.
 
-            prefix: str
-                To prefix the add to the base
-                url, e.g. https://.../<prefix goes after this>.
-            methods: list
-                List of methods, e.g. get, post etc.
-            resp_actions: dict
-                Method response actions.
-            resp_exceptions: dict
-                Method response exceptions.
-            resp_functions: dict
-                Method functions.
+        prefix: str
+            To prefix the add to the base
+            url, e.g. https://.../<prefix goes after this>.
+        methods: list
+            List of methods, e.g. get, post etc.
+        resp_actions: dict
+            Method response actions.
+        resp_exceptions: dict
+            Method response exceptions.
+        resp_functions: dict
+            Method functions.
         """
 
         self.methods = methods
@@ -51,7 +52,7 @@ class Methods:
         self.resp_exceptions = resp_exceptions
         self.resp_functions = resp_functions
 
-    def _process(self):
+    def _process(self) -> None:
         """ Processes all paramters. """
 
         if self._client:
