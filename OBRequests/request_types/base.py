@@ -30,7 +30,7 @@ class RequestsBase:
         path_params = {}
         for name, value in kwargs.items():
             if name.startswith("_"):
-                path_params[name[1:]] = value
+                path_params[name[1:]] = value if value else ""
             else:
                 additional_params[name] = value
 

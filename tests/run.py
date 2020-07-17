@@ -26,7 +26,7 @@ test = Request(
         "comments/{id}",
         [
             Get(
-                _id=1,
+                _id=None,
                 resp_functions={
                     404: RespFunction(
                         test_func,
@@ -57,9 +57,7 @@ test = Request(
 
 async def test_async():
     try:
-        print(await test.comment.get(
-            _id=2
-        ))
+        print(await test.comment.get())
     except FooBar:
         print("Some expection")
     else:

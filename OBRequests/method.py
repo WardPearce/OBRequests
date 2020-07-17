@@ -42,7 +42,7 @@ class MethodModel:
             if not name.startswith("_"):
                 self.kwargs[name] = value
             else:
-                self.path_params[name[1:]] = value
+                self.path_params[name[1:]] = value if value else ""
 
 
 class Get(MethodModel):
