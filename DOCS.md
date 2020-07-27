@@ -13,6 +13,7 @@
 - Pathway parameters always start with a underscore ('_').
 - Pathway parameters can only be passed inside methods.
 - Methods are defined using a double underscore ('__').
+- If a pathway parameter is set as None, it will give a blank string.
 
 ## Hierarchy
 - Request
@@ -61,7 +62,7 @@ EXAMPLE = Request(
         "comments/{id}",
         [
             Get(
-                _id=""
+                _id=None
             )
         ],
     ),
@@ -129,7 +130,7 @@ class InvalidResponse(Exception):
     pass
 ```
 
-## Support methods
+## Supported methods
 - Get
 - Post
 - Head
