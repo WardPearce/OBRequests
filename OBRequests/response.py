@@ -1,12 +1,12 @@
 class Json:
-    """ Attempt to read response
-        as json.
+    """Json response.
     """
 
     pass
 
 
 class Read:
-    """ Read response. """
+    """Read response.
+    """
 
     pass

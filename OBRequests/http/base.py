@@ -1,0 +1,2 @@
+class HTTPBase:
+    pass
