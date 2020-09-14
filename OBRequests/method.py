@@ -1,4 +1,4 @@
-class MethodModel:
+class MethodBase:
     def __init__(self, actions: dict = None,
                  exceptions: dict = None,
                  functions: dict = None,
@@ -24,29 +24,29 @@ class MethodModel:
                 self.path_params[name[1:]] = value if value else ""
 
 
-class Get(MethodModel):
+class Get(MethodBase):
     pass
 
 
-class Post(MethodModel):
+class Post(MethodBase):
     pass
 
 
-class Head(MethodModel):
+class Head(MethodBase):
     pass
 
 
-class Options(MethodModel):
+class Options(MethodBase):
     pass
 
 
-class Put(MethodModel):
+class Put(MethodBase):
     pass
 
 
-class Patch(MethodModel):
+class Patch(MethodBase):
     pass
 
 
-class Delete(MethodModel):
+class Delete(MethodBase):
     pass

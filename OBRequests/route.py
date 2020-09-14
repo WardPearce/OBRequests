@@ -10,20 +10,30 @@ from .method import (
     Patch,
     Delete
 )
+from .http.awaiting import HTTPAwaiting
+from .http.blocking import HTTPBlocking
 
 
 class Route:
-    def __init__(self, prefix: str,
-                 methods: list,
-                 actions: dict = None,
-                 exceptions: dict = None,
-                 functions: dict = None) -> None:
+    get = None
+    post = None
+    head = None
+    options = None
+    put = None
+    patch = None
+    delete = None
 
-        self.__prefix = prefix
-        self.__methods = methods
-        self.__actions = actions
-        self.__exceptions = exceptions
-        self.__functions = functions
+    def init(self, prefix: str,
+             methods: list,
+             actions: dict = None,
+             exceptions: dict = None,
+             functions: dict = None) -> None:
+
+        self.prefix = prefix
+        self.methods = methods
+        self.actions = actions
+        self.exceptions = exceptions
+        self.functions = functions
 
     def _process(self, client: (AsyncClient, Client),
                  global_actions: dict, global_exceptions: dict,
@@ -36,41 +46,56 @@ class Route:
             HTTPX client.
         """
 
-        for method in self.__methods:
+        for method in self.methods:
             if method.actions is None:
-                if self.__actions:
-                    method.actions = self.__actions
+                if self.actions:
+                    method.actions = self.actions
                 else:
                     method.actions = global_actions
 
             if method.exceptions is None:
-                if self.__exceptions:
-                    method.exceptions = self.__exceptions
+                if self.exceptions:
+                    method.exceptions = self.exceptions
                 else:
                     method.exceptions = global_exceptions
 
             if method.functions is None:
-                if self.__functions:
-                    method.functions = self.__functions
+                if self.functions:
+                    method.functions = self.functions
                 else:
                     method.functions = global_functions
 
             if type(method) != object:
                 raise InvalidMethod()
 
+            if isinstance(client, AsyncClient):
+                http = HTTPAwaiting(
+                    client,
+                    method.actions,
+                    method.exceptions,
+                    method.functions
+                )
+            else:
+                http = HTTPBlocking(
+                    client,
+                    method.actions,
+                    method.exceptions,
+                    method.functions
+                )
+
             if isinstance(method, Get):
-                pass
+                self.get = http._get
             elif isinstance(method, Post):
-                pass
+                self.post = http._post
             elif isinstance(method, Head):
-                pass
+                self.head = http._head
             elif isinstance(method, Options):
-                pass
+                self.options = http._options
             elif isinstance(method, Put):
-                pass
+                self.put = http._put
             elif isinstance(method, Patch):
-                pass
+                self.patch = http._patch
             elif isinstance(method, Delete):
-                pass
+                self.delete = http._delete
             else:
                 raise InvalidMethod()
