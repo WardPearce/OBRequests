@@ -35,6 +35,8 @@ class HTTPBase:
         if self.functions and response.status_code in self.functions:
             self.functions[response.status_code]()
 
+        return response
+
     def _format(self, **kwargs) -> dict:
         additional_params = {}
         path_params = {}
