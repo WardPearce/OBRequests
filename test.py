@@ -12,12 +12,12 @@ json_placeholder = Blocking(
     },
 
     __todos=Route(
-        "todos",
+        "todos/{id}",
         [
             Get()
         ]
     )
 )
 
-
-print(json_placeholder.todos.get())
+print(json_placeholder.todos.get(_id=1))
+json_placeholder._close()

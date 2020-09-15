@@ -33,7 +33,7 @@ class RequestBase:
             if name.startswith("_") and not name.startswith("__"):
                 client_params[name] = value
 
-        init_client = client(
+        self.init_client = client(
             **client_params
         )
 
@@ -42,7 +42,7 @@ class RequestBase:
                 if isinstance(value, Route):
                     value._process(
                         base_url,
-                        init_client,
+                        self.init_client,
                         actions,
                         exceptions,
                         functions

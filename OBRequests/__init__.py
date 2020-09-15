@@ -35,7 +35,7 @@ class Awaiting(RequestBase):
             **kwargs
         )
 
-    async def close(self) -> None:
+    async def _close(self) -> None:
         """Closes sessions.
         """
 
@@ -66,7 +66,7 @@ class Blocking(RequestBase):
             **kwargs
         )
 
-    def close(self) -> None:
+    def _close(self) -> None:
         """Closes sessions.
         """
 
