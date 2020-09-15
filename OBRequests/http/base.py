@@ -10,12 +10,10 @@ class HTTPBase:
     def __init__(self, base_url: str,
                  client: (Client, AsyncClient),
                  actions: dict,
-                 exceptions: dict,
                  prefix: str,
                  method: MethodBase) -> None:
 
         self.actions = actions
-        self.exceptions = exceptions
         self.prefix = prefix
         self.method = method
         self.base_url = base_url
@@ -31,11 +29,10 @@ class HTTPBase:
                     self.actions[response.status_code], Function):
                 func = self.actions[response.status_code]
                 return func.coro(*func.args, **func.kwargs)
+            elif issubclass(self.actions[response.status_code], Exception):
+                raise self.actions[response.status_code]()
             else:
                 raise InvalidResponse()
-
-        if self.exceptions and response.status_code in self.exceptions:
-            raise self.exceptions[response.status_code]()
 
         return response
 

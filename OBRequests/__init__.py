@@ -21,10 +21,6 @@ class Awaiting(RequestBase):
             Base URL.
         actions : dict, optional
             Actions to call at status codes, by default None
-        exceptions : dict, optional
-            Exceptions to rase at status codes, by default None
-        functions : dict, optional
-            Functions to call at status codes, by default None
         kwargs
             Paramters to phrase.
         """
@@ -52,10 +48,6 @@ class Blocking(RequestBase):
             Base URL.
         actions : dict, optional
             Actions to call at status codes, by default None
-        exceptions : dict, optional
-            Exceptions to rase at status codes, by default None
-        functions : dict, optional
-            Functions to call at status codes, by default None
         kwargs
             Paramters to phrase.
         """

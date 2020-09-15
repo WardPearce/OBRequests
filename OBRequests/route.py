@@ -25,16 +25,14 @@ class Route:
 
     def __init__(self, prefix: str,
                  methods: list = None,
-                 actions: dict = None,
-                 exceptions: dict = None) -> None:
+                 actions: dict = None) -> None:
 
         self.prefix = prefix
         self.methods = methods
         self.actions = actions
-        self.exceptions = exceptions
 
     def _process(self, base_url: str, client: (AsyncClient, Client),
-                 global_actions: dict, global_exceptions: dict) -> None:
+                 global_actions: dict) -> None:
         """Processes route.
 
         Parameters
@@ -47,24 +45,21 @@ class Route:
             return
 
         for method in self.methods:
-            if method.actions is None:
-                if self.actions:
-                    method.actions = self.actions
-                else:
-                    method.actions = global_actions
+            actions = {}
+            if global_actions:
+                actions.update(global_actions)
 
-            if method.exceptions is None:
-                if self.exceptions:
-                    method.exceptions = self.exceptions
-                else:
-                    method.exceptions = global_exceptions
+            if self.actions:
+                actions.update(self.actions)
+
+            if method.actions:
+                actions.update(method.actions)
 
             if isinstance(client, AsyncClient):
                 http = HTTPAwaiting(
                     base_url,
                     client,
-                    method.actions,
-                    method.exceptions,
+                    actions,
                     self.prefix,
                     method
                 )
@@ -72,8 +67,7 @@ class Route:
                 http = HTTPBlocking(
                     base_url,
                     client,
-                    method.actions,
-                    method.exceptions,
+                    actions,
                     self.prefix,
                     method
                 )
