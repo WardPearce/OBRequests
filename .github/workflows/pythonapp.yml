@@ -24,4 +24,4 @@ jobs:
           # exit-zero treats all errors as warnings
           flake8 . --count --max-line-length=80 --statistics --exclude .git,__pycache__,docs/source/conf.py,old,build,dist
       - name: Run unit tests
-        run: run_tests
+        run: python run_tests.py
