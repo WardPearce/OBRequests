@@ -3,8 +3,6 @@ from .exceptions import InvalidRoute
 
 
 class RequestBase:
-    _client = None
-
     def __init__(self, client,
                  base_url: str,
                  actions: dict = None,
@@ -36,7 +34,6 @@ class RequestBase:
                 client_params[name] = value
 
         init_client = client(
-            base_url=base_url,
             **client_params
         )
 
@@ -44,6 +41,7 @@ class RequestBase:
             if name.startswith("__"):
                 if isinstance(value, Route):
                     value._process(
+                        base_url,
                         init_client,
                         actions,
                         exceptions,

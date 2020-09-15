@@ -24,7 +24,7 @@ class Route:
     delete = None
 
     def __init__(self, prefix: str,
-                 methods: list,
+                 methods: list = None,
                  actions: dict = None,
                  exceptions: dict = None,
                  functions: dict = None) -> None:
@@ -35,7 +35,7 @@ class Route:
         self.exceptions = exceptions
         self.functions = functions
 
-    def _process(self, client: (AsyncClient, Client),
+    def _process(self, base_url: str, client: (AsyncClient, Client),
                  global_actions: dict, global_exceptions: dict,
                  global_functions: dict) -> None:
         """Processes route.
@@ -45,6 +45,9 @@ class Route:
         client : (AsyncClient, Client)
             HTTPX client.
         """
+
+        if not self.methods:
+            return
 
         for method in self.methods:
             if method.actions is None:
@@ -67,6 +70,7 @@ class Route:
 
             if isinstance(client, AsyncClient):
                 http = HTTPAwaiting(
+                    base_url,
                     client,
                     method.actions,
                     method.exceptions,
@@ -76,6 +80,7 @@ class Route:
                 )
             else:
                 http = HTTPBlocking(
+                    base_url,
                     client,
                     method.actions,
                     method.exceptions,

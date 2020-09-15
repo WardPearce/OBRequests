@@ -7,21 +7,20 @@ from ..method import MethodBase
 
 
 class HTTPBase:
-    def __init__(self, client: (Client, AsyncClient),
+    def __init__(self, base_url: str, client: (Client, AsyncClient),
                  actions: dict, exceptions: dict,
                  functions: dict,
                  prefix: str,
                  method: MethodBase) -> None:
-
         self.actions = actions
         self.exceptions = exceptions
         self.functions = functions
         self.prefix = prefix
         self.method = method
+        self.base_url = base_url
         self._client = client
 
     def _response(self, response: Response) -> Any:
-        print(response.url)
         if self.actions and response.status_code in self.actions:
             if self.actions[response.status_code] == Json:
                 return response.json()
@@ -52,4 +51,4 @@ class HTTPBase:
         else:
             formatted_route = self.prefix
 
-        return additional_params, formatted_route
+        return additional_params, self.base_url + formatted_route
