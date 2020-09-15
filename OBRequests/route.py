@@ -26,18 +26,15 @@ class Route:
     def __init__(self, prefix: str,
                  methods: list = None,
                  actions: dict = None,
-                 exceptions: dict = None,
-                 functions: dict = None) -> None:
+                 exceptions: dict = None) -> None:
 
         self.prefix = prefix
         self.methods = methods
         self.actions = actions
         self.exceptions = exceptions
-        self.functions = functions
 
     def _process(self, base_url: str, client: (AsyncClient, Client),
-                 global_actions: dict, global_exceptions: dict,
-                 global_functions: dict) -> None:
+                 global_actions: dict, global_exceptions: dict) -> None:
         """Processes route.
 
         Parameters
@@ -62,19 +59,12 @@ class Route:
                 else:
                     method.exceptions = global_exceptions
 
-            if method.functions is None:
-                if self.functions:
-                    method.functions = self.functions
-                else:
-                    method.functions = global_functions
-
             if isinstance(client, AsyncClient):
                 http = HTTPAwaiting(
                     base_url,
                     client,
                     method.actions,
                     method.exceptions,
-                    method.functions,
                     self.prefix,
                     method
                 )
@@ -84,7 +74,6 @@ class Route:
                     client,
                     method.actions,
                     method.exceptions,
-                    method.functions,
                     self.prefix,
                     method
                 )

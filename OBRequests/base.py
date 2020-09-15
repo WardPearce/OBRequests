@@ -7,7 +7,6 @@ class RequestBase:
                  base_url: str,
                  actions: dict = None,
                  exceptions: dict = None,
-                 functions: dict = None,
                  **kwargs) -> None:
         """OBRequest Base.
 
@@ -19,8 +18,6 @@ class RequestBase:
             Actions to call at status codes, by default None
         exceptions : dict, optional
             Exceptions to rase at status codes, by default None
-        functions : dict, optional
-            Functions to call at status codes, by default None
         kwargs
             Paramters to phrase.
         """
@@ -45,7 +42,6 @@ class RequestBase:
                         self.init_client,
                         actions,
                         exceptions,
-                        functions
                     )
 
                     setattr(

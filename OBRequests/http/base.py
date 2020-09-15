@@ -1,20 +1,21 @@
 from httpx import Client, AsyncClient, Response
 from typing import Any
 
-from ..response import Json, Read
+from ..response import Json, Read, Function
 from ..exceptions import InvalidResponse
 from ..method import MethodBase
 
 
 class HTTPBase:
-    def __init__(self, base_url: str, client: (Client, AsyncClient),
-                 actions: dict, exceptions: dict,
-                 functions: dict,
+    def __init__(self, base_url: str,
+                 client: (Client, AsyncClient),
+                 actions: dict,
+                 exceptions: dict,
                  prefix: str,
                  method: MethodBase) -> None:
+
         self.actions = actions
         self.exceptions = exceptions
-        self.functions = functions
         self.prefix = prefix
         self.method = method
         self.base_url = base_url
@@ -26,14 +27,15 @@ class HTTPBase:
                 return response.json()
             elif self.actions[response.status_code] == Read:
                 return response.read()
+            elif isinstance(
+                    self.actions[response.status_code], Function):
+                func = self.actions[response.status_code]
+                return func.coro(*func.args, **func.kwargs)
             else:
                 raise InvalidResponse()
 
         if self.exceptions and response.status_code in self.exceptions:
             raise self.exceptions[response.status_code]()
-
-        if self.functions and response.status_code in self.functions:
-            self.functions[response.status_code]()
 
         return response
 

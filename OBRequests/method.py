@@ -1,19 +1,16 @@
 class MethodBase:
     def __init__(self, actions: dict = None,
                  exceptions: dict = None,
-                 functions: dict = None,
                  **kwargs) -> None:
         """
         actions: dict
         exceptions: dict
-        functions: dict
         kwargs:
             Different parameters to pass to the request.
         """
 
         self.actions = actions
         self.exceptions = exceptions
-        self.functions = functions
 
         self.kwargs = {}
         self.path_params = {}
