@@ -5,7 +5,7 @@ from .base import RequestBase
 
 __version__ = "1.0.0"
 __url__ = "https://OBRequests.readthedocs.io/en/latest/"
-__description__ = "About Object-based request library, built on top of HTTPX."
+__description__ = "Object-based request library what's built on top of HTTPX."
 __author__ = "WardPearce"
 __author_email__ = "wardpearce@protonmail.com"
 __license__ = "GPL v3"
