@@ -10,3 +10,11 @@ class InvalidMethod(Exception):
     """
 
     pass
+
+
+class InvalidResponse(Exception):
+    """ Raised when OBRequests doesn't
+        Understand the response object.
+    """
+
+    pass

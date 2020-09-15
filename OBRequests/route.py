@@ -23,11 +23,11 @@ class Route:
     patch = None
     delete = None
 
-    def init(self, prefix: str,
-             methods: list,
-             actions: dict = None,
-             exceptions: dict = None,
-             functions: dict = None) -> None:
+    def __init__(self, prefix: str,
+                 methods: list,
+                 actions: dict = None,
+                 exceptions: dict = None,
+                 functions: dict = None) -> None:
 
         self.prefix = prefix
         self.methods = methods
@@ -65,22 +65,23 @@ class Route:
                 else:
                     method.functions = global_functions
 
-            if type(method) != object:
-                raise InvalidMethod()
-
             if isinstance(client, AsyncClient):
                 http = HTTPAwaiting(
                     client,
                     method.actions,
                     method.exceptions,
-                    method.functions
+                    method.functions,
+                    self.prefix,
+                    method
                 )
             else:
                 http = HTTPBlocking(
                     client,
                     method.actions,
                     method.exceptions,
-                    method.functions
+                    method.functions,
+                    self.prefix,
+                    method
                 )
 
             if isinstance(method, Get):

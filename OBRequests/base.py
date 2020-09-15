@@ -1,12 +1,12 @@
-from httpx import AsyncClient, Client
-
 from .route import Route
 from .exceptions import InvalidRoute
 
 
 class RequestBase:
-    def __init__(self, base_url: str,
-                 client: (Client, AsyncClient),
+    _client = None
+
+    def __init__(self, client,
+                 base_url: str,
                  actions: dict = None,
                  exceptions: dict = None,
                  functions: dict = None,
@@ -17,8 +17,6 @@ class RequestBase:
         ----------
         base_url : str
             Base URL.
-        client : (Client, AsyncClient)
-            HTTPX client.
         actions : dict, optional
             Actions to call at status codes, by default None
         exceptions : dict, optional
@@ -44,7 +42,7 @@ class RequestBase:
 
         for name, value in kwargs.items():
             if name.startswith("__"):
-                if type(value) == object and isinstance(value, Route):
+                if isinstance(value, Route):
                     value._process(
                         init_client,
                         actions,

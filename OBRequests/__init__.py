@@ -19,8 +19,6 @@ class Awaiting(RequestBase):
         ----------
         base_url : str
             Base URL.
-        client : (Client, AsyncClient)
-            HTTPX client.
         actions : dict, optional
             Actions to call at status codes, by default None
         exceptions : dict, optional
@@ -52,8 +50,6 @@ class Blocking(RequestBase):
         ----------
         base_url : str
             Base URL.
-        client : (Client, AsyncClient)
-            HTTPX client.
         actions : dict, optional
             Actions to call at status codes, by default None
         exceptions : dict, optional

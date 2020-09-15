@@ -4,23 +4,50 @@ from .base import HTTPBase
 
 
 class HTTPBlocking(HTTPBase):
-    def _get(self, *args, **kwargs) -> typing.Any:
-        pass
+    def __request(self, request, **kwargs):
+        additional_params, route = self._format(**kwargs)
+        return self._response(
+            request(route, **additional_params)
+        )
 
-    def _post(self, *args, **kwargs) -> typing.Any:
-        pass
+    def _get(self, **kwargs) -> typing.Any:
+        return self.__request(
+            self._client.get,
+            **kwargs
+        )
 
-    def _head(self, *args, **kwargs) -> typing.Any:
-        pass
+    def _post(self, **kwargs) -> typing.Any:
+        return self.__request(
+            self._client.post,
+            **kwargs
+        )
 
-    def _options(self, *args, **kwargs) -> typing.Any:
-        pass
+    def _head(self, **kwargs) -> typing.Any:
+        return self.__request(
+            self._client.head,
+            **kwargs
+        )
 
-    def _put(self, *args, **kwargs) -> typing.Any:
-        pass
+    def _options(self, **kwargs) -> typing.Any:
+        return self.__request(
+            self._client.options,
+            **kwargs
+        )
 
-    def _patch(self, *args, **kwargs) -> typing.Any:
-        pass
+    def _put(self, **kwargs) -> typing.Any:
+        return self.__request(
+            self._client.put,
+            **kwargs
+        )
 
-    def _delete(self, *args, **kwargs) -> typing.Any:
-        pass
+    def _patch(self, **kwargs) -> typing.Any:
+        return self.__request(
+            self._client.patch,
+            **kwargs
+        )
+
+    def _delete(self, **kwargs) -> typing.Any:
+        return self.__request(
+            self._client.delete,
+            **kwargs
+        )
