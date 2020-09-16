@@ -10,14 +10,6 @@ This library aims to simplfily & remove repeative code from writing HTTP request
 - Easy to use with an object oriented design.
 - Unit testing.
 
-Documentation Contents
-----------------------
-
-.. toctree::
-   :maxdepth: 3
-
-   intro
-
 
 Install
 -------
@@ -29,6 +21,19 @@ Pip: ::
 Git: ::
 
       pip3 install git+https://github.com/WardPearce/OBRequests.git
+
+
+Documentation Contents
+----------------------
+
+.. toctree::
+   :maxdepth: 3
+
+   intro
+   examples
+   methods
+   responses
+   api
 
 
 Indices and tables

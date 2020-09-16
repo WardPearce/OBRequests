@@ -2,6 +2,8 @@ class MethodBase:
     def __init__(self, actions: dict = None,
                  **kwargs) -> None:
         """
+        Parameters
+        ----------
         actions: dict
         kwargs:
             Different parameters to pass to the request.

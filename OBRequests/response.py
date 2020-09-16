@@ -13,14 +13,16 @@ class Read:
 
 
 class Function:
-    def __init__(self, coro, *args, **kwargs):
-        """
-        coro
-            Function coroutine to call.
-        args
-        kwargs
-        """
+    """
+    Parameters
+    ----------
+    coro
+        Function coroutine to call.
+    args
+    kwargs
+    """
 
+    def __init__(self, coro, *args, **kwargs):
         self.coro = coro
         self.args = args
         self.kwargs = kwargs

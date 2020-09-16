@@ -3,22 +3,22 @@ from .exceptions import InvalidRoute
 
 
 class RequestBase:
+    """OBRequest Base.
+
+    Parameters
+    ----------
+    base_url : str
+        Base URL.
+    actions : dict, optional
+        Actions to call at status codes, by default None
+    kwargs
+        Paramters to phrase.
+    """
+
     def __init__(self, client,
                  base_url: str,
                  actions: dict = None,
                  **kwargs) -> None:
-        """OBRequest Base.
-
-        Parameters
-        ----------
-        base_url : str
-            Base URL.
-        actions : dict, optional
-            Actions to call at status codes, by default None
-        kwargs
-            Paramters to phrase.
-        """
-
         if base_url[:-1] != "/":
             base_url += "/"
 
