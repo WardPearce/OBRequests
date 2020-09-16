@@ -5,8 +5,8 @@ OBRequests has support for both asynchronous & synchronous requests thanks to HT
 This intro will cover the basic of both. Lucily for you the API for asynchronous (awaiting) & synchronous (blocking) is identical.
 
 
-Parameters Syntax
------------------
+Parameter Syntax
+----------------
 
 - Double underscore before the parameter name (e.g. '__foo') declears a parameter as a route.
 - A signle underscore before the parameter name (e.g. '_bar') declears a parameter as a path value.
