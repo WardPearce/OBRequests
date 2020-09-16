@@ -5,6 +5,30 @@ OBRequests has support for both asynchronous & synchronous requests thanks to HT
 This intro will cover the basic of both. Lucily for you the API for asynchronous (awaiting) & synchronous (blocking) is identical.
 
 
+Syntax
+------
+
+- Double underscore before the parameter name (e.g. '__foo') declears a parameter as a route.
+- A signle underscore before the parameter name (e.g. '_bar') declears a parameter as a path value.
+- Excluding 'actions' & 'base_url', parameters without any starting underscore will be passed to the HTTPX client.
+
+
+Notes
+-----
+
+- Path parameters with a value of 'None' will be set as a blank string, if you want to pass None or null make it a string.
+- If the response status code doesn't match any of the actions the HTTPX response object will be returned.
+
+
+Action hierarchy
+----------------
+The hierarchy system of OBRequests is very simple.
+
+- Method actions always have priority .
+- Route actions will have priority over global actions.
+- Global actions are only used if non of the above match.
+
+
 Awaiting
 --------
 
@@ -15,13 +39,17 @@ Awaiting
     from OBRequests.method import Get, Post
     from OBRequests.route import Route
 
+    from httpx import BasicAuth
     from asyncio import get_event_loop
+
 
     client = OBRequests.Awaiting(
         "https://jsonplaceholder.typicode.com",
         actions={
             200: Json,
         },
+
+        auth=BasicAuth("username", "password"),
 
         __posts=Route(
             "posts/{post_id}",
@@ -50,6 +78,7 @@ Awaiting
 
     get_event_loop().run_until_complete(async_loop())
 
+
 Blocking
 --------
 
@@ -60,11 +89,16 @@ Blocking
     from OBRequests.method import Get, Post
     from OBRequests.route import Route
 
+    from httpx import BasicAuth
+
+
     client = OBRequests.Blocking(
         "https://jsonplaceholder.typicode.com",
         actions={
             200: Json,
         },
+
+        auth=BasicAuth("username", "password"),
 
         __posts=Route(
             "posts/{post_id}",
@@ -74,7 +108,7 @@ Blocking
             ],
             actions={
                 201: Json
-            }
+            },
         )
     )
 
