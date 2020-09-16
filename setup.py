@@ -15,14 +15,14 @@ def get_long_description():
 
 
 def get_variable(variable):
-    with open(os.path.join("OBRequest", "__init__.py")) as f:
+    with open(os.path.join("OBRequests", "__init__.py")) as f:
         return re.search(
             "{} = ['\"]([^'\"]+)['\"]".format(variable), f.read()
         ).group(1)
 
 
 setup(
-    name="OBRequest",
+    name="OBRequests",
     version=get_variable("__version__"),
     url=get_variable("__url__"),
     description=get_variable("__description__"),
@@ -33,9 +33,9 @@ setup(
     install_requires=get_requirements(),
     license=get_variable("__license__"),
     packages=[
-        "OBRequest",
-        "OBRequest.http",
-         "OBRequest.tests",
+        "OBRequests",
+        "OBRequests.http",
+        "OBRequests.tests",
     ],
     python_requires=">=3.6",
     include_package_data=True,
