@@ -1,12 +1,26 @@
 class Json:
-    """ Attempt to read response
-        as json.
+    """Json response.
     """
 
     pass
 
 
 class Read:
-    """ Read response. """
+    """Read response.
+    """
 
     pass
+
+
+class Function:
+    def __init__(self, coro, *args, **kwargs):
+        """
+        coro
+            Function coroutine to call.
+        args
+        kwargs
+        """
+
+        self.coro = coro
+        self.args = args
+        self.kwargs = kwargs

@@ -1,6 +1,12 @@
+class InvalidRoute(Exception):
+    """Raised when route isn't a route object.
+    """
+
+    pass
+
+
 class InvalidMethod(Exception):
-    """ Raised when the given method
-        Isn't understood by OBRequests.
+    """Raised when method is invalid
     """
 
     pass
