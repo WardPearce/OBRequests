@@ -1,13 +1,13 @@
 Welcome to OBRequests's documentation!
 ======================================
 OBRequests was created to eliminate common boilerplate code I'd find myself writing when using HTTP libraries.
-This library aims to simplfily & remove repeative code from writing HTTP requests without compromising performance.
+This library aims to simplify & remove repetitive code from writing HTTP requests without compromising performance.
 
 **Features**
 
 - Full HTTP coverage.
 - Asynchronous & synchronous support.
-- Easy to use with an object oriented design.
+- Easy to use with an object-oriented design.
 - Unit testing.
 
 
