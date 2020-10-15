@@ -1,4 +1,5 @@
 from httpx import AsyncClient, Client
+from typing import Tuple
 
 from .exceptions import InvalidMethod
 from .method import (
@@ -31,14 +32,19 @@ class Route:
         self.methods = methods
         self.actions = actions
 
-    def _process(self, base_url: str, client: (AsyncClient, Client),
+    def _process(self, base_url: str, client: Tuple[AsyncClient, Client],
                  global_actions: dict) -> None:
         """Processes route.
 
         Parameters
         ----------
-        client : (AsyncClient, Client)
-            HTTPX client.
+        base_url : str
+        client : Tuple[AsyncClient, Client]
+        global_actions : dict
+
+        Raises
+        ------
+        InvalidMethod
         """
 
         if not self.methods:

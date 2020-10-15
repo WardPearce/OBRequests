@@ -1,5 +1,5 @@
 from httpx import Client, AsyncClient, Response
-from typing import Any
+from typing import Any, Tuple
 
 from ..response import Json, Read, Function
 from ..exceptions import InvalidResponse
@@ -8,7 +8,7 @@ from ..method import MethodBase
 
 class HTTPBase:
     def __init__(self, base_url: str,
-                 client: (Client, AsyncClient),
+                 client: Tuple[Client, AsyncClient],
                  actions: dict,
                  prefix: str,
                  method: MethodBase) -> None:
