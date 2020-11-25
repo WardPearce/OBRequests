@@ -3,7 +3,7 @@ from httpx import AsyncClient, Client
 from .base import RequestBase
 
 
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 __url__ = "https://OBRequests.readthedocs.io/en/latest/"
 __description__ = "Object-based request library what's built on top of HTTPX."
 __author__ = "WardPearce"
