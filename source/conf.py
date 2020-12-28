@@ -81,19 +81,19 @@ html_sidebars = {
 html_theme_options = {
 
     # Set the name of the project to appear in the navigation.
-    'nav_title': 'dathost',
+    'nav_title': 'OBRequests',
 
     # Specify a base_url used to generate sitemap.xml. If not
     # specified, then no sitemap will be built.
-    'base_url': 'https://dathost.readthedocs.io/en/latest/',
+    'base_url': 'https://obrequests.readthedocs.io/en/latest/',
 
     # Set the color and the accent color
     'color_primary': 'blue',
     'color_accent': 'light-blue',
 
     # Set the repo location to get a badge with stats
-    'repo_url': 'https://github.com/WardPearce/dathost',
-    'repo_name': 'dathost',
+    'repo_url': 'https://github.com/Object-Based/Requests',
+    'repo_name': 'OBRequests',
 
     # Visible levels of the global TOC; -1 means unlimited
     'globaltoc_depth': 3,
