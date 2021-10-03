@@ -1,12 +1,43 @@
 from typing import Awaitable, Callable, Dict, Union
 from httpx import Response, AsyncClient, Client
 
-from ._defined import json, read, raw, response
+from httpx._exceptions import (
+    CloseError,
+    ConnectError,
+    ConnectTimeout,
+    CookieConflict,
+    DecodingError,
+    HTTPError,
+    HTTPStatusError,
+    InvalidURL,
+    LocalProtocolError,
+    NetworkError,
+    PoolTimeout,
+    ProtocolError,
+    ProxyError,
+    ReadError,
+    ReadTimeout,
+    RemoteProtocolError,
+    RequestError,
+    RequestNotRead,
+    ResponseNotRead,
+    StreamClosed,
+    StreamConsumed,
+    StreamError,
+    TimeoutException,
+    TooManyRedirects,
+    TransportError,
+    UnsupportedProtocol,
+    WriteError,
+    WriteTimeout,
+)
+
+from ._defined import json, read, raw, response, raise_for_status
 from ._awaiting import _AwaitingRequestHandler
 from ._blocking import _BlockingRequestHandler
 from ._call_back import CallBack
 from ._route import Route
-from .errors import InvalidStatusCode
+from .errors import InvalidResponse
 from ._methods import (
     Post,
     Get,
@@ -26,6 +57,7 @@ __all__ = [
     "json",
     "read",
     "raw",
+    "raise_for_status",
     "response",
 
     "Post",
@@ -35,7 +67,37 @@ __all__ = [
     "Put",
     "Patch",
 
-    "InvalidStatusCode"
+    "CloseError",
+    "ConnectError",
+    "ConnectTimeout",
+    "CookieConflict",
+    "DecodingError",
+    "HTTPError",
+    "HTTPStatusError",
+    "InvalidURL",
+    "LocalProtocolError",
+    "NetworkError",
+    "PoolTimeout",
+    "ProtocolError",
+    "ProxyError",
+    "ReadError",
+    "ReadTimeout",
+    "RemoteProtocolError",
+    "RequestError",
+    "RequestNotRead",
+    "Response",
+    "ResponseNotRead",
+    "StreamClosed",
+    "StreamConsumed",
+    "StreamError",
+    "TimeoutException",
+    "TooManyRedirects",
+    "TransportError",
+    "UnsupportedProtocol",
+    "WriteError",
+    "WriteTimeout",
+
+    "InvalidResponse"
 ]
 
 

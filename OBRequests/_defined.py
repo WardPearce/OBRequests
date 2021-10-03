@@ -16,3 +16,7 @@ def raw(resp: Response, **kwargs) -> Iterable[bytes]:
 
 def response(resp: Response, **kwargs) -> Response:
     return resp
+
+
+def raise_for_status(resp: Response, **kwargs) -> None:
+    resp.raise_for_status()

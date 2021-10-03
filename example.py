@@ -3,8 +3,10 @@ from OBRequests import (
     Response,
     CallBack,
     Route,
+    Get,
     json,
-    Get
+    raise_for_status,
+    HTTPStatusError
 )
 
 
@@ -21,20 +23,25 @@ request = OBRequests(
     },
     base_url="https://jsonplaceholder.typicode.com",
     posts__=Route(
-        "/posts",
+        "/post",
+        responses={
+            404: CallBack(raise_for_status)
+        },
         methods=[
             Get(
                 responses={
                     200: CallBack(custom_response, is_get=True)
                 }
-            )
+            ),
         ]
     )
 )
 
 
-# Prints Status code
-request.posts.get()
+try:
+    request.posts.get()
+except HTTPStatusError as error:
+    print(error)
 
 # Returns phased JSON
 request.base.get(url="/posts")

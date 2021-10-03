@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING, Dict
 from httpx import Response
 
-from .errors import InvalidStatusCode
+from .errors import InvalidResponse
 
 
 if TYPE_CHECKING:
@@ -57,7 +57,7 @@ class _BlockingRequestHandler:
                 resp=resp, **call_back._kwargs  # type: ignore
             )
         else:
-            raise InvalidStatusCode()
+            raise InvalidResponse()
 
     def post(self, **kwargs):
         return self._handle(

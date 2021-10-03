@@ -6,7 +6,7 @@ from ._call_back import CallBack
 class Method:
     _method: str
 
-    def __init__(self, responses: Dict[int, CallBack]) -> None:
+    def __init__(self, responses: Dict[int, CallBack] = {}) -> None:
         self._responses = responses
 
 
