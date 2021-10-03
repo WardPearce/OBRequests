@@ -24,37 +24,42 @@ class _AwaitingRequestHandler(_BlockingRequestHandler):
             return func
 
     async def post(self, **kwargs):
-        resp, method = await self._make_post(**kwargs)  # type: ignore
+        resp, method = self._make_post(**kwargs)
         return await self._handle(
-            resp, method
+            await resp,  # type: ignore
+            method
         )
 
     async def get(self, **kwargs):
-        resp, method = await self._make_get(**kwargs)  # type: ignore
+        resp, method = self._make_get(**kwargs)
         return await self._handle(
-            resp, method
+            await resp,  # type: ignore
+            method
         )
 
     async def head(self, **kwargs):
-        resp, method = await self._make_head(**kwargs)  # type: ignore
+        resp, method = self._make_head(**kwargs)
         return await self._handle(
             resp, method
         )
 
     async def delete(self, **kwargs):
-        resp, method = await self._make_delete(**kwargs)  # type: ignore
+        resp, method = self._make_delete(**kwargs)
         return await self._handle(
-            resp, method
+            await resp,  # type: ignore
+            method
         )
 
     async def put(self, **kwargs):
-        resp, method = await self._make_put(**kwargs)  # type: ignore
+        resp, method = self._make_put(**kwargs)
         return await self._handle(
-            resp, method
+            await resp,  # type: ignore
+            method
         )
 
     async def patch(self, **kwargs):
-        resp, method = await self._make_patch(**kwargs)  # type: ignore
+        resp, method = self._make_patch(**kwargs)
         return await self._handle(
-            resp, method
+            await resp,  # type: ignore
+            method
         )
