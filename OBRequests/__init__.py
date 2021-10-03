@@ -32,7 +32,9 @@ from httpx._exceptions import (
     WriteTimeout,
 )
 
-from ._defined import json, read, raw, response, raise_for_status
+from ._defined import (
+    json, read, response, raise_for_status
+)
 from ._awaiting import _AwaitingRequestHandler
 from ._blocking import _BlockingRequestHandler
 from ._call_back import CallBack
@@ -56,7 +58,6 @@ __all__ = [
 
     "json",
     "read",
-    "raw",
     "raise_for_status",
     "response",
 
