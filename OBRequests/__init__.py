@@ -201,10 +201,9 @@ class OBRequests:
     async def __aclose(self) -> None:
         await self._client.aclose()  # type: ignore
 
-    def _inject_url(self, kwargs, path: str = None) -> dict:
+    def _inject_url(self, kwargs, path: str = None) -> None:
         if "url" not in kwargs:
             if path:
                 kwargs["url"] = str(self._client.base_url) + path
             else:
                 kwargs["url"] = self._client.base_url
-        return kwargs
