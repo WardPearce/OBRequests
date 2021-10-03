@@ -96,36 +96,48 @@ class _BlockingRequestHandler:
             raise InvalidResponse()
 
     def post(self, **kwargs):
+        """Makes a POST request to the API endpoint
+        """
         resp, method = self._make_post(**kwargs)
         return self._handle(
             resp, method
         )
 
     def get(self, **kwargs):
+        """Makes a GET request to the API endpoint
+        """
         resp, method = self._make_get(**kwargs)
         return self._handle(
             resp, method
         )
 
     def head(self, **kwargs):
+        """Makes a HEAD request to the API endpoint
+        """
         resp, method = self._make_head(**kwargs)
         return self._handle(
             resp, method
         )
 
     def delete(self, **kwargs):
+        """Makes a DELETE request to the API endpoint
+        """
         resp, method = self._make_delete(**kwargs)
         return self._handle(
             resp, method
         )
 
     def put(self, **kwargs):
+        """Makes a PUT request to the API endpoint
+        """
         resp, method = self._make_put(**kwargs)
         return self._handle(
             resp, method
         )
 
     def patch(self, **kwargs):
+        """Makes a PATCH request to the API endpoint
+        """
         resp, method = self._make_patch(**kwargs)
         return self._handle(
             resp, method

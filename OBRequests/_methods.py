@@ -13,24 +13,36 @@ class Method:
 
 
 class Get(Method):
+    """GET method
+    """
     _method = "GET"
 
 
 class Post(Method):
+    """DELETE method
+    """
     _method = "POST"
 
 
 class Head(Method):
+    """HEAD method
+    """
     _method = "HEAD"
 
 
 class Delete(Method):
+    """DELETE method
+    """
     _method = "DELETE"
 
 
 class Put(Method):
+    """PUT method
+    """
     _method = "PUT"
 
 
 class Patch(Method):
+    """PATCH method
+    """
     _method = "PATCH"

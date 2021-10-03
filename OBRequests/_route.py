@@ -17,6 +17,18 @@ class Route(_BlockingRequestHandler):  # Inherits for notaion
     def __init__(self, path: str, methods: List[Method] = [],
                  responses: Dict[int, CallBack] = {},
                  path_params: dict = {}) -> None:
+        """Route
+
+        Parameters
+        ----------
+        path : str
+        methods : List[Method], optional
+            by default []
+        responses : Dict[int, CallBack], optional
+            by default {}
+        path_params : dict, optional
+            by default {}
+        """
         if path[0] == "/":
             path = path[1:]
 
