@@ -116,14 +116,15 @@ class OBRequests:
 
     close_: Callable[[], Awaitable]
 
-    def __init__(self, base_url: str, responses: Dict[int, CallBack],
+    def __init__(self, base_url: str, responses: Dict[int, CallBack] = {},
                  awaiting: bool = False, **kwargs) -> None:
         """This method is called to create a new client .
 
         Parameters
         ----------
         base_url : URLTypes
-        responses : Dict[int, Callable[[Response], Any]]
+        responses : Dict[int, Callable[[Response], Any]], optional
+            by default {}
         awaiting : bool, optional
             If client should be async or not by default False
         auth : AuthTypes, optional

@@ -93,7 +93,7 @@ class _BlockingRequestHandler:
                 resp=resp, **call_back._kwargs  # type: ignore
             )
         else:
-            raise InvalidResponse()
+            raise InvalidResponse(f"{resp.status_code} Client Error: Not Found for url: {resp.url} \nFor more information check: https://httpstatuses.com/{resp.status_code}")  # noqa: E501
 
     def post(self, **kwargs):
         """Makes a POST request to the API endpoint
