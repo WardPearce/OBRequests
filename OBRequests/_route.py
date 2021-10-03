@@ -13,6 +13,8 @@ class Route:
 
         self._path = path
 
+        # TODO: NEED TO ADD GLOBAL ROUTE RESPONSE / METHODS
+
         self._method_response = {}
         self._method_path_params = {}
         for method in methods:
