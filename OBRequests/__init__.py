@@ -195,6 +195,15 @@ class OBRequests:
         else:
             setattr(self, "close_", self.__close)
 
+    def __enter__(self):
+        return self
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, exc_type, exc, tb):
+        await self.close_()
+
     def __close(self) -> None:
         self._client.close()  # type: ignore
 
