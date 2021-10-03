@@ -1,0 +1,2 @@
+class InvalidStatusCode(BaseException):
+    pass
