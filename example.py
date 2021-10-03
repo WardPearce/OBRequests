@@ -18,28 +18,31 @@ def custom_response(resp: Response, is_get: bool = False) -> None:
         raise NotImplementedError()
 
 
+class Requests(OBRequests):
+    posts = Route(
+        "/posts/{post_id}",
+        responses={
+            404: CallBack(raise_for_status)
+        },
+        path_params={
+            "post_id": "404_error"
+        },
+        methods=[
+            Get(
+                responses={
+                    200: CallBack(custom_response, is_get=True)
+                },
+            ),
+        ]
+    )
+
+
 async def main() -> None:
-    request = OBRequests(
+    request = Requests(
         responses={
             200: CallBack(json)
         },
         base_url="https://jsonplaceholder.typicode.com",
-        posts__=Route(
-            "/posts/{post_id}",
-            responses={
-                404: CallBack(raise_for_status)
-            },
-            path_params={
-                "post_id": "404_error"
-            },
-            methods=[
-                Get(
-                    responses={
-                        200: CallBack(custom_response, is_get=True)
-                    },
-                ),
-            ]
-        ),
         awaiting=True
     )
 
@@ -54,9 +57,9 @@ async def main() -> None:
     })
 
     # Returns phased JSON
-    await request.base.get(url="/posts")
+    await request.base_.get(url="/posts")
 
-    await request.close()
+    await request.close_()
 
 
 loop = get_event_loop()

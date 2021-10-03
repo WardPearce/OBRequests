@@ -10,9 +10,10 @@ from ._methods import (
     Put,
     Patch
 )
+from ._awaiting import _AwaitingRequestHandler
 
 
-class Route:
+class Route(_AwaitingRequestHandler):  # Inherits for notaion
     def __init__(self, path: str, methods: List[Method] = [],
                  responses: Dict[int, CallBack] = {},
                  path_params: dict = {}) -> None:

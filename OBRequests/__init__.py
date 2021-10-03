@@ -106,7 +106,7 @@ class OBRequests:
     _root_resp: Dict[int, CallBack]
     _is_awaiting: bool
 
-    close: Callable[[], Awaitable]
+    close_: Callable[[], Awaitable]
 
     def __init__(self, base_url: str, responses: Dict[int, CallBack],
                  awaiting: bool = False, **kwargs) -> None:
@@ -162,15 +162,13 @@ class OBRequests:
             else _BlockingRequestHandler
         )
 
-        for key, value in dict(kwargs).items():
-            if key.endswith("__"):
-                value: Route = value
-
-                kwargs.pop(key)
+        for key in dir(self):
+            if not key.startswith("_") and not key.endswith("_"):
+                value: Route = getattr(self, key)
 
                 setattr(
                     self,
-                    key[:-2],
+                    key,
                     handler(
                         self,
                         value._path,
@@ -190,12 +188,12 @@ class OBRequests:
         )
         self._root_resp = responses
 
-        self.base = handler(self)
+        self.base_ = handler(self)
 
         if awaiting:
-            setattr(self, "close", self.__aclose)
+            setattr(self, "close_", self.__aclose)
         else:
-            setattr(self, "close", self.__close)
+            setattr(self, "close_", self.__close)
 
     def __close(self) -> None:
         self._client.close()  # type: ignore
