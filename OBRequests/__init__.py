@@ -1,5 +1,8 @@
 from typing import Awaitable, Callable, Dict, Union
-from httpx import Response, AsyncClient, Client
+from httpx import (
+    Response, AsyncClient, Client, codes,
+    BasicAuth, Timeout, DigestAuth, Cookies
+)
 
 from httpx._exceptions import (
     CloseError,
@@ -32,9 +35,7 @@ from httpx._exceptions import (
     WriteTimeout,
 )
 
-from ._defined import (
-    json, read, response, raise_for_status
-)
+from ._defined import json, read, response, raise_for_status
 from ._awaiting import _AwaitingRequestHandler
 from ._blocking import _BlockingRequestHandler
 from ._call_back import CallBack
@@ -55,6 +56,12 @@ __all__ = [
     "OBRequests",
     "CallBack",
     "Route",
+
+    "BasicAuth",
+    "DigestAuth",
+    "Cookies",
+    "codes",
+    "Timeout",
 
     "json",
     "read",

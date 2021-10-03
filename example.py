@@ -5,6 +5,7 @@ from OBRequests import (
     CallBack,
     Route,
     Get,
+    codes,
     json,
     raise_for_status,
     HTTPStatusError
@@ -40,7 +41,7 @@ class Requests(OBRequests):
 async def main() -> None:
     request = Requests(
         responses={
-            200: CallBack(json)
+            codes.OK: CallBack(json)
         },
         base_url="https://jsonplaceholder.typicode.com",
         awaiting=True
