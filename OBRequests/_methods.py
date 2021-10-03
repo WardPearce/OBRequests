@@ -6,8 +6,10 @@ from ._call_back import CallBack
 class Method:
     _method: str
 
-    def __init__(self, responses: Dict[int, CallBack] = {}) -> None:
+    def __init__(self, responses: Dict[int, CallBack] = {},
+                 path_params: dict = {}) -> None:
         self._responses = responses
+        self._path_params = path_params
 
 
 class Get(Method):

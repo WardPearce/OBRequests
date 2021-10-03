@@ -23,15 +23,18 @@ request = OBRequests(
     },
     base_url="https://jsonplaceholder.typicode.com",
     posts__=Route(
-        "/post",
+        "/posts/{post_id}",
         responses={
             404: CallBack(raise_for_status)
+        },
+        path_params={
+            "post_id": "404_error"
         },
         methods=[
             Get(
                 responses={
                     200: CallBack(custom_response, is_get=True)
-                }
+                },
             ),
         ]
     )
@@ -42,6 +45,11 @@ try:
     request.posts.get()
 except HTTPStatusError as error:
     print(error)
+
+# Prints status code
+request.posts.get(path_params={
+    "post_id": 1
+})
 
 # Returns phased JSON
 request.base.get(url="/posts")

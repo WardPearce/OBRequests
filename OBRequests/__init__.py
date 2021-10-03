@@ -37,7 +37,7 @@ from ._awaiting import _AwaitingRequestHandler
 from ._blocking import _BlockingRequestHandler
 from ._call_back import CallBack
 from ._route import Route
-from .errors import InvalidResponse
+from ._errors import InvalidResponse
 from ._methods import (
     Post,
     Get,
@@ -171,7 +171,12 @@ class OBRequests:
                 setattr(
                     self,
                     key[:-2],
-                    handler(self, value._path, value._method_response)
+                    handler(
+                        self,
+                        value._path,
+                        value._method_response,
+                        value._method_path_params
+                    )
                 )
 
         if awaiting:

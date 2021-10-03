@@ -11,9 +11,10 @@ if TYPE_CHECKING:
 
 class _AwaitingRequestHandler(_BlockingRequestHandler):
     def __init__(self, upper: "OBRequests", path: str = None,
-                 method_response: Dict[str, Dict[int, "CallBack"]] = {}
+                 method_response: Dict[str, Dict[int, "CallBack"]] = {},
+                 method_path_params: dict = {}
                  ) -> None:
-        super().__init__(upper, path, method_response)
+        super().__init__(upper, path, method_response, method_path_params)
 
     async def _handle(self, resp: Response, method: str):
         func = super()._handle(resp, method)

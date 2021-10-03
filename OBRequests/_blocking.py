@@ -1,7 +1,15 @@
-from typing import TYPE_CHECKING, Dict
+from typing import TYPE_CHECKING, Dict, Tuple
 from httpx import Response
 
-from .errors import InvalidResponse
+from ._errors import InvalidResponse
+from ._methods import (
+    Post,
+    Get,
+    Head,
+    Delete,
+    Put,
+    Patch
+)
 
 
 if TYPE_CHECKING:
@@ -12,35 +20,63 @@ class _BlockingRequestHandler:
     _upper: "OBRequests"
 
     def __init__(self, upper: "OBRequests", path: str = None,
-                 method_response: Dict[str, Dict[int, "CallBack"]] = {}
+                 method_response: Dict[str, Dict[int, "CallBack"]] = {},
+                 method_path_params: dict = {}
                  ) -> None:
         self._upper = upper
         self._path = path
         self._method_response = method_response
+        self._method_path_params = method_path_params
 
-    def _make_post(self, **kwargs) -> Response:
+    def _request_injects(self, kwargs: dict, method: str) -> None:
         self._upper._inject_url(kwargs, self._path)
-        return self._upper._client.post(**kwargs)  # type: ignore
 
-    def _make_get(self, **kwargs) -> Response:
-        self._upper._inject_url(kwargs, self._path)
-        return self._upper._client.get(**kwargs)  # type: ignore
+        if method in self._method_path_params:
+            if "path_params" in kwargs:
+                kwargs["url"] = kwargs["url"].format_map({
+                    **self._method_path_params[method],
+                    **kwargs["path_params"]
+                })
+                kwargs.pop("path_params")
+            else:
+                kwargs["url"] = kwargs["url"].format_map(
+                    self._method_path_params[method]
+                )
+        elif "path_params" in kwargs:
+            kwargs["url"] = kwargs["url"].format_map(
+                kwargs["path_params"]
+            )
+            kwargs.pop("path_params")
 
-    def _make_head(self, **kwargs) -> Response:
-        self._upper._inject_url(kwargs, self._path)
-        return self._upper._client.head(**kwargs)  # type: ignore
+    def _make_post(self, **kwargs) -> Tuple[Response, str]:
+        method = Post._method
+        self._request_injects(kwargs, method)
+        return self._upper._client.post(**kwargs), method  # type: ignore
 
-    def _make_delete(self, **kwargs) -> Response:
-        self._upper._inject_url(kwargs, self._path)
-        return self._upper._client.delete(**kwargs)  # type: ignore
+    def _make_get(self, **kwargs) -> Tuple[Response, str]:
+        method = Get._method
+        self._request_injects(kwargs, method)
+        return self._upper._client.get(**kwargs), method  # type: ignore
 
-    def _make_put(self, **kwargs) -> Response:
-        self._upper._inject_url(kwargs, self._path)
-        return self._upper._client.put(**kwargs)  # type: ignore
+    def _make_head(self, **kwargs) -> Tuple[Response, str]:
+        method = Head._method
+        self._request_injects(kwargs, method)
+        return self._upper._client.head(**kwargs), method  # type: ignore
 
-    def _make_patch(self, **kwargs) -> Response:
-        self._upper._inject_url(kwargs, self._path)
-        return self._upper._client.patch(**kwargs)  # type: ignore
+    def _make_delete(self, **kwargs) -> Tuple[Response, str]:
+        method = Delete._method
+        self._request_injects(kwargs, method)
+        return self._upper._client.delete(**kwargs), method  # type: ignore
+
+    def _make_put(self, **kwargs) -> Tuple[Response, str]:
+        method = Put._method
+        self._request_injects(kwargs, method)
+        return self._upper._client.put(**kwargs), method  # type: ignore
+
+    def _make_patch(self, **kwargs) -> Tuple[Response, str]:
+        method = Patch._method
+        self._request_injects(kwargs, method)
+        return self._upper._client.patch(**kwargs), method  # type: ignore
 
     def _handle(self, resp: Response, method: str):
         if method in self._method_response:
@@ -60,31 +96,37 @@ class _BlockingRequestHandler:
             raise InvalidResponse()
 
     def post(self, **kwargs):
+        resp, method = self._make_post(**kwargs)
         return self._handle(
-            self._make_post(**kwargs), "POST"
+            resp, method
         )
 
     def get(self, **kwargs):
+        resp, method = self._make_get(**kwargs)
         return self._handle(
-            self._make_get(**kwargs), "GET"
+            resp, method
         )
 
     def head(self, **kwargs):
+        resp, method = self._make_head(**kwargs)
         return self._handle(
-            self._make_head(**kwargs), "HEAD"
+            resp, method
         )
 
     def delete(self, **kwargs):
+        resp, method = self._make_delete(**kwargs)
         return self._handle(
-            self._make_delete(**kwargs), "DELETE"
+            resp, method
         )
 
     def put(self, **kwargs):
+        resp, method = self._make_put(**kwargs)
         return self._handle(
-            self._make_put(**kwargs), "PUT"
+            resp, method
         )
 
     def patch(self, **kwargs):
+        resp, method = self._make_patch(**kwargs)
         return self._handle(
-            self._make_patch(**kwargs), "PATCH"
+            resp, method
         )
