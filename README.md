@@ -20,7 +20,7 @@ Modern typed requests for Python
 - Documented
 - Supports sync & async with a flick of a boolean
 - Built on top of [HTTPX](https://github.com/encode/httpx) for stability and security.
-    - Supports all the amazing features of HTTPX
+    - Supports all the amazing [features](https://github.com/encode/httpx#features) of HTTPX
 
 ## Example
 ```py
