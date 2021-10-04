@@ -34,6 +34,7 @@ class _BlockingRequestHandler:
     def _request_injects(self, kwargs: dict, method: str) -> None:
         self._upper._inject_url(kwargs, self._path)
 
+        # Method key should always be in dict
         if self._method_path_params[method]:
             if "path_params" in kwargs:
                 kwargs["url"] = str(kwargs["url"]).format_map({
@@ -82,6 +83,7 @@ class _BlockingRequestHandler:
         return self._upper._client.patch(**kwargs), method  # type: ignore
 
     def _handle(self, resp: Response, method: str, is_awaiting: bool = False):
+        # Method key should always be in dict
         if self._method_response[method]:
             responses = {
                 **self._upper._root_resp,

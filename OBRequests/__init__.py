@@ -129,7 +129,7 @@ class OBRequests:
     _globals: dict
 
     def __init__(self, base_url: str,
-                 responses: "RESPONSES" = {},  # noqa: E501
+                 responses: "RESPONSES" = {},
                  globals_: dict = {}, awaiting: bool = False, **kwargs
                  ) -> None:
         """This method is called to create a new client .
