@@ -111,7 +111,7 @@ __all__ = [
 
 __version__ = "2.0.0"
 __url__ = "https://obrequests.readthedocs.io/en/latest/"
-__description__ = "The modern way of writting HTTP requests"
+__description__ = "Modern typed requests for Python"
 __author__ = "WardPearce"
 __author_email__ = "wardpearce@pm.me"
 __license__ = "GNU General Public License v3.0"
