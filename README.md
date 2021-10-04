@@ -6,6 +6,7 @@ Modern typed requests for Python
 - [Docs](#docs)
 - [Features](#features)
 - [Example](#example)
+    - [Project example](/tree/Development/example)
 - [Thanks to](#thanks-to)
 
 ## Install
@@ -62,7 +63,7 @@ request = Requests(
     base_url="https://jsonplaceholder.typicode.com",
     awaiting=False,
     globals_={
-        ""
+        "example": True
     }
 )
 
