@@ -93,3 +93,9 @@ class TestBlocking(TestBase):
             self.client.posts.get(path_params={
                 "post_id": "404_error"
             })
+
+    def test_base(self) -> None:
+        self.assertIsInstance(
+            self.client.base_.get(url="/posts"),
+            object
+        )

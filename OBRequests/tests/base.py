@@ -115,6 +115,9 @@ class TestBase(asynctest.TestCase):
             awaiting=self.awaiting,
             globals_={
                 "test": 1
+            },
+            responses={
+                200: CallBack(json)
             }
         )
 

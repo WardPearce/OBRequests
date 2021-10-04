@@ -12,6 +12,7 @@ from ._methods import (
 )
 from ._conditional import ConditionalCallBack
 from ._catch_all import AnyStatus
+from ._defaults import METHOD_DICT
 
 
 if TYPE_CHECKING:
@@ -23,9 +24,9 @@ class _BlockingRequestHandler:
     _upper: "OBRequests"
 
     def __init__(self, upper: "OBRequests", path: str = None,
-                 method_response: "METHOD_RESPONSES" = {},
-                 method_path_params: dict = {},
-                 method_kwargs: dict = {}
+                 method_response: "METHOD_RESPONSES" = METHOD_DICT,
+                 method_path_params: dict = METHOD_DICT,
+                 method_kwargs: dict = METHOD_DICT
                  ) -> None:
         self._upper = upper
         self._path = path

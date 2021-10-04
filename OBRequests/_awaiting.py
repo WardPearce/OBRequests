@@ -3,6 +3,7 @@ from httpx import Response
 from inspect import isawaitable
 
 from ._blocking import _BlockingRequestHandler
+from ._defaults import METHOD_DICT
 
 
 if TYPE_CHECKING:
@@ -12,9 +13,9 @@ if TYPE_CHECKING:
 
 class _AwaitingRequestHandler(_BlockingRequestHandler):
     def __init__(self, upper: "OBRequests", path: str = None,
-                 method_response: "METHOD_RESPONSES" = {},
-                 method_path_params: dict = {},
-                 method_kwargs: dict = {}
+                 method_response: "METHOD_RESPONSES" = METHOD_DICT,
+                 method_path_params: dict = METHOD_DICT,
+                 method_kwargs: dict = METHOD_DICT
                  ) -> None:
         super().__init__(
             upper, path, method_response,

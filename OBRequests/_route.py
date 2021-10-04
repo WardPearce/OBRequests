@@ -1,14 +1,7 @@
 from typing import TYPE_CHECKING, List
 
-from ._methods import (
-    Method,
-    Get,
-    Post,
-    Head,
-    Delete,
-    Put,
-    Patch
-)
+from ._methods import Method
+from ._defaults import METHODS
 from ._awaiting import _BlockingRequestHandler
 
 if TYPE_CHECKING:
@@ -75,8 +68,7 @@ class Route(_BlockingRequestHandler):  # Inherits for notaion
         self._method_kwargs = {}
 
         # Preloading Route responses & path_params to all methods
-        for method in [Get._method, Post._method, Head._method,
-                       Delete._method, Put._method, Patch._method]:
+        for method in METHODS:
             self._method_response[method] = responses
             self._method_path_params[method] = path_params
             self._method_kwargs[method] = kwargs
