@@ -189,6 +189,10 @@ class OBRequests:
 
         for key in dir(self):
             if not key.startswith("_") and not key.endswith("_"):
+                assert not isinstance(
+                    self, Route
+                ), f"{key} must be type 'Route'"
+
                 value: Route = getattr(self, key)
 
                 setattr(
