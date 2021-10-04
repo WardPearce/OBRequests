@@ -1,5 +1,5 @@
 # Object-Based Requests
-Modern typed requests for Python
+OBRequests is a modern typed requests library for Python. It aims to eliminate common boilerplate code & make supporting async & sync python together easy!
 
 ## Index
 - [Install](#install)
