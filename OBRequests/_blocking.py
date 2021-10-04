@@ -56,8 +56,8 @@ class _BlockingRequestHandler:
 
         if self._method_kwargs[method]:
             kwargs = {
-                **kwargs,
-                **self._method_kwargs[method]
+                **self._method_kwargs[method],
+                **kwargs
             }
 
         return kwargs
