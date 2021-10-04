@@ -92,6 +92,7 @@ request.posts.get(path_params={
 # Returns phased JSON
 request.base_.get(url="/posts")
 
+# Only needed for async
 request.close_()
 ```
 
