@@ -7,29 +7,40 @@ from OBRequests import (
     Put,
     Patch,
     Delete,
-    json,
     raise_for_status,
     codes
+)
+
+from .handlers import (
+    post_handle, todo_handle, album_handle,
+    photo_handle, comment_handle, posts_handle
 )
 
 
 class Requests(OBRequests):
     posts = Route(
-        "/posts/{post_id}",
+        "/posts",
         methods=[
             Get(
-                path_params={
-                    "post_id": ""
-                },
-            ),
-            Post(
-                path_params={
-                    "post_id": ""
-                },
                 responses={
-                    201: CallBack(json)
+                    codes.OK: CallBack(posts_handle)
                 }
             ),
+            Post(
+                responses={
+                    201: CallBack(post_handle)
+                }
+            )
+        ]
+    )
+
+    post = Route(
+        "/posts/{post_id}",
+        responses={
+            codes.OK: CallBack(post_handle)
+        },
+        methods=[
+            Get(),
             Put(),
             Patch(),
             Delete(
@@ -42,39 +53,56 @@ class Requests(OBRequests):
 
     comments = Route(
         "/posts/{post_id}/comments",
-        responses={
-            codes.NOT_FOUND: CallBack(raise_for_status)
-        },
         methods=[
-            Get()
+            Get(
+                responses={
+                    codes.OK: CallBack(comment_handle)
+                }
+            )
         ]
     )
 
     albums = Route(
-        "/albums/{album_id}/photos",
+        "/albums/{user_id}/photos",
         methods=[
-            Get()
+            Get(
+                responses={
+                    codes.OK: CallBack(photo_handle)
+                }
+            )
         ]
     )
 
     user_albums = Route(
         "/users/{user_id}/albums",
         methods=[
-            Get()
+            Get(
+                responses={
+                    codes.OK: CallBack(album_handle)
+                }
+            )
         ]
     )
 
     user_todos = Route(
         "/users/{user_id}/todos",
         methods=[
-            Get()
+            Get(
+                responses={
+                    codes.OK: CallBack(todo_handle)
+                }
+            )
         ]
     )
 
     user_posts = Route(
         "/users/{user_id}/posts",
         methods=[
-            Get()
+            Get(
+                responses={
+                    codes.OK: CallBack(posts_handle)
+                }
+            )
         ]
     )
 

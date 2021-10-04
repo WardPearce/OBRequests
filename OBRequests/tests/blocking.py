@@ -80,3 +80,9 @@ class TestBlocking(TestBase):
             self.client.conditional.get(),
             "block"
         )
+
+    def test_global(self) -> None:
+        self.assertEqual(
+            self.client.global_var.get(),
+            1
+        )

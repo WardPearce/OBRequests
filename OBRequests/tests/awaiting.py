@@ -80,3 +80,9 @@ class TestAwaiting(TestBase):
             await self.client.conditional.get(),
             "await"
         )
+
+    async def test_global(self) -> None:
+        self.assertEqual(
+            await self.client.global_var.get(),
+            1
+        )

@@ -25,6 +25,10 @@ def is_blocking(resp: Response, **kwargs) -> str:
     return "block"
 
 
+def test_globals(resp: Response, **kwargs) -> int:
+    return kwargs["globals_"]["test"]
+
+
 class Requests(OBRequests):
     posts = Route(
         "/posts/{post_id}",
@@ -71,6 +75,15 @@ class Requests(OBRequests):
         ]
     )
 
+    global_var = Route(
+        "/",
+        methods=[
+            Get(responses={
+                codes.OK: CallBack(test_globals)
+            })
+        ]
+    )
+
     comments = Route(
         "/posts/{post_id}/comments",
         responses={
@@ -95,7 +108,10 @@ class TestBase(asynctest.TestCase):
     def setUp(self) -> None:
         self.client = Requests(
             base_url="https://jsonplaceholder.typicode.com",
-            awaiting=self.awaiting
+            awaiting=self.awaiting,
+            globals_={
+                "test": 1
+            }
         )
 
     async def tearDown(self) -> None:

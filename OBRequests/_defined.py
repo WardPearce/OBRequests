@@ -2,10 +2,12 @@ from httpx import Response
 
 
 def json(resp: Response, **kwargs) -> dict:
+    kwargs.pop("globals_")
     return resp.json(**kwargs)
 
 
 def read(resp: Response, **kwargs) -> bytes:
+    kwargs.pop("globals_")
     return resp.read(**kwargs)
 
 

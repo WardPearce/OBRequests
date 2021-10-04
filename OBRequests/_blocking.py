@@ -98,7 +98,8 @@ class _BlockingRequestHandler:
                     call_back = call_back._blocking
 
             return call_back._func(
-                resp=resp, **call_back._kwargs  # type: ignore
+                resp=resp,  # type: ignore
+                **{**call_back._kwargs, "globals_": self._upper._globals}
             )
         else:
             raise InvalidResponse(f"{resp.status_code} Client Error: Not Found for url: {resp.url} \nFor more information check: https://httpstatuses.com/{resp.status_code}")  # noqa: E501

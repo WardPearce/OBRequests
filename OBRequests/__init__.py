@@ -119,10 +119,13 @@ __license__ = "GNU General Public License v3.0"
 
 class OBRequests:
     close_: Callable[[], Awaitable]
+    _root_resp: Dict[int, Union[CallBack, ConditionalCallBack]]
+    _globals: dict
 
     def __init__(self, base_url: str,
                  responses: Dict[int, Union[CallBack, ConditionalCallBack]] = {},  # noqa: E501
-                 awaiting: bool = False, **kwargs) -> None:
+                 globals_: dict = {}, awaiting: bool = False, **kwargs
+                 ) -> None:
         """This method is called to create a new client .
 
         Parameters
@@ -132,6 +135,8 @@ class OBRequests:
             by default {}
         awaiting : bool, optional
             If client should be async or not by default False
+        globals_ : dict, optional
+            Globals vars to be passed to every callback.
         auth : AuthTypes, optional
             by default None
         params : QueryParamTypes, optional
@@ -201,6 +206,7 @@ class OBRequests:
             **kwargs
         )
         self._root_resp = responses
+        self._globals = globals_
 
         self.base_ = handler(self)
 
