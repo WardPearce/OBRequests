@@ -24,14 +24,16 @@ class _BlockingRequestHandler:
 
     def __init__(self, upper: "OBRequests", path: str = None,
                  method_response: "METHOD_RESPONSES" = {},
-                 method_path_params: dict = {}
+                 method_path_params: dict = {},
+                 method_kwargs: dict = {}
                  ) -> None:
         self._upper = upper
         self._path = path
         self._method_response = method_response
         self._method_path_params = method_path_params
+        self._method_kwargs = method_kwargs
 
-    def _request_injects(self, kwargs: dict, method: str) -> None:
+    def _request_injects(self, kwargs: dict, method: str) -> dict:
         self._upper._inject_url(kwargs, self._path)
 
         # Method key should always be in dict
@@ -52,35 +54,49 @@ class _BlockingRequestHandler:
             )
             kwargs.pop("path_params")
 
+        if self._method_kwargs[method]:
+            kwargs = {
+                **kwargs,
+                **self._method_kwargs[method]
+            }
+
+        return kwargs
+
     def _make_post(self, **kwargs) -> Tuple[Response, str]:
         method = Post._method
-        self._request_injects(kwargs, method)
-        return self._upper._client.post(**kwargs), method  # type: ignore
+        return self._upper._client.post(
+            **self._request_injects(kwargs, method)
+        ), method  # type: ignore
 
     def _make_get(self, **kwargs) -> Tuple[Response, str]:
         method = Get._method
-        self._request_injects(kwargs, method)
-        return self._upper._client.get(**kwargs), method  # type: ignore
+        return self._upper._client.get(
+            **self._request_injects(kwargs, method)
+        ), method  # type: ignore
 
     def _make_head(self, **kwargs) -> Tuple[Response, str]:
         method = Head._method
-        self._request_injects(kwargs, method)
-        return self._upper._client.head(**kwargs), method  # type: ignore
+        return self._upper._client.head(
+            **self._request_injects(kwargs, method)
+        ), method  # type: ignore
 
     def _make_delete(self, **kwargs) -> Tuple[Response, str]:
         method = Delete._method
-        self._request_injects(kwargs, method)
-        return self._upper._client.delete(**kwargs), method  # type: ignore
+        return self._upper._client.delete(
+            **self._request_injects(kwargs, method)
+        ), method  # type: ignore
 
     def _make_put(self, **kwargs) -> Tuple[Response, str]:
         method = Put._method
-        self._request_injects(kwargs, method)
-        return self._upper._client.put(**kwargs), method  # type: ignore
+        return self._upper._client.put(
+            **self._request_injects(kwargs, method)
+        ), method  # type: ignore
 
     def _make_patch(self, **kwargs) -> Tuple[Response, str]:
         method = Patch._method
-        self._request_injects(kwargs, method)
-        return self._upper._client.patch(**kwargs), method  # type: ignore
+        return self._upper._client.patch(
+            **self._request_injects(kwargs, method)
+        ), method  # type: ignore
 
     def _handle(self, resp: Response, method: str, is_awaiting: bool = False):
         # Method key should always be in dict

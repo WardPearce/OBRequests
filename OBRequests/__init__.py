@@ -198,7 +198,8 @@ class OBRequests:
                         self,
                         value._path,
                         value._method_response,
-                        value._method_path_params
+                        value._method_path_params,
+                        value._method_kwargs
                     )
                 )
 

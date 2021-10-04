@@ -14,7 +14,8 @@ from .. import (
     json,
     raise_for_status,
     codes,
-    AnyStatus
+    AnyStatus,
+    BasicAuth
 )
 
 
@@ -44,7 +45,8 @@ class Requests(OBRequests):
                 },
                 responses={
                     codes.OK: CallBack(json)
-                }
+                },
+                auth=BasicAuth("different", "password")
             ),
             Post(
                 path_params={
@@ -61,7 +63,8 @@ class Requests(OBRequests):
                     codes.OK: CallBack(raise_for_status)
                 }
             )
-        ]
+        ],
+        auth=BasicAuth("username", "password")
     )
 
     conditional = Route(

@@ -2,7 +2,6 @@
 OBRequests is a modern typed requests library for Python 3. It aims to eliminate common boilerplate code when creating API wrappers and makes supporting async & sync python together easy!
 
 ## TODO:
-- Typing HTTPX parameters in `Route` & `Method`
 - Complete documentation
 - Final before production optimizations
 
@@ -31,7 +30,8 @@ OBRequests is a modern typed requests library for Python 3. It aims to eliminate
 ```py
 from OBRequests import (
     OBRequests, Response, CallBack, Route,
-    Get, json, raise_for_status, HTTPStatusError, AnyStatus
+    Get, json, raise_for_status,
+    HTTPStatusError, AnyStatus, BasicAuth
 )
 
 
@@ -61,8 +61,10 @@ class Requests(OBRequests):
                         blocking=CallBack(custom_response, is_get=False)
                     )
                 },
+                auth=BasicAuth("different", "password")
             ),
-        ]
+        ],
+        auth=BasicAuth("username", "password")
     )
 
 

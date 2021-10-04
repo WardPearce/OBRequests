@@ -13,9 +13,13 @@ if TYPE_CHECKING:
 class _AwaitingRequestHandler(_BlockingRequestHandler):
     def __init__(self, upper: "OBRequests", path: str = None,
                  method_response: "METHOD_RESPONSES" = {},
-                 method_path_params: dict = {}
+                 method_path_params: dict = {},
+                 method_kwargs: dict = {}
                  ) -> None:
-        super().__init__(upper, path, method_response, method_path_params)
+        super().__init__(
+            upper, path, method_response,
+            method_path_params, method_kwargs
+        )
 
     async def _handle(self, resp: Response, method: str):
         func = super()._handle(resp, method, True)
