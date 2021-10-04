@@ -49,7 +49,11 @@ class Requests(OBRequests):
         methods=[
             Get(
                 responses={
-                    200: CallBack(custom_response, is_get=True)
+                    200: CallBack(custom_response, is_get=True),
+                    201: ConditionalCallBack(
+                        awaiting=CallBack(custom_response, is_get=True),
+                        blocking=CallBack(custom_response, is_get=False)
+                    )
                 },
             ),
         ]
