@@ -6,7 +6,7 @@ Modern typed requests for Python
 - [Docs](#docs)
 - [Features](#features)
 - [Example](#example)
-    - [Project example](/tree/Development/example)
+    - [Project example](/example)
 - [Thanks to](#thanks-to)
 
 ## Install
