@@ -10,6 +10,7 @@ from ._methods import (
     Put,
     Patch
 )
+from ._conditional import ConditionalCallBack
 
 
 if TYPE_CHECKING:
@@ -31,19 +32,20 @@ class _BlockingRequestHandler:
     def _request_injects(self, kwargs: dict, method: str) -> None:
         self._upper._inject_url(kwargs, self._path)
 
-        if method in self._method_path_params:
+        if (method in self._method_path_params
+                and self._method_path_params[method]):
             if "path_params" in kwargs:
-                kwargs["url"] = kwargs["url"].format_map({
+                kwargs["url"] = str(kwargs["url"]).format_map({
                     **self._method_path_params[method],
                     **kwargs["path_params"]
                 })
                 kwargs.pop("path_params")
             else:
-                kwargs["url"] = kwargs["url"].format_map(
+                kwargs["url"] = str(kwargs["url"]).format_map(
                     self._method_path_params[method]
                 )
         elif "path_params" in kwargs:
-            kwargs["url"] = kwargs["url"].format_map(
+            kwargs["url"] = str(kwargs["url"]).format_map(
                 kwargs["path_params"]
             )
             kwargs.pop("path_params")
@@ -78,8 +80,8 @@ class _BlockingRequestHandler:
         self._request_injects(kwargs, method)
         return self._upper._client.patch(**kwargs), method  # type: ignore
 
-    def _handle(self, resp: Response, method: str):
-        if method in self._method_response:
+    def _handle(self, resp: Response, method: str, is_awaiting: bool = False):
+        if method in self._method_response and self._method_response[method]:
             responses = {
                 **self._upper._root_resp,
                 **self._method_response[method]
@@ -89,6 +91,12 @@ class _BlockingRequestHandler:
 
         if resp.status_code in responses:
             call_back = responses[resp.status_code]
+            if isinstance(call_back, ConditionalCallBack):
+                if is_awaiting:
+                    call_back = call_back._awaiting
+                else:
+                    call_back = call_back._blocking
+
             return call_back._func(
                 resp=resp, **call_back._kwargs  # type: ignore
             )

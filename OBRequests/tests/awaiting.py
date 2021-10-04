@@ -74,3 +74,9 @@ class TestAwaiting(TestBase):
             }),
             object
         )
+
+    async def test_conditional(self) -> None:
+        self.assertEqual(
+            await self.client.conditional.get(),
+            "await"
+        )

@@ -1,6 +1,7 @@
-from typing import List, Dict
+from typing import List, Dict, Union
 
 from ._call_back import CallBack
+from ._conditional import ConditionalCallBack
 from ._methods import (
     Method,
     Get,
@@ -15,7 +16,7 @@ from ._awaiting import _BlockingRequestHandler
 
 class Route(_BlockingRequestHandler):  # Inherits for notaion
     def __init__(self, path: str, methods: List[Method] = [],
-                 responses: Dict[int, CallBack] = {},
+                 responses: Dict[int, Union[CallBack, ConditionalCallBack]] = {},  # noqa: E501
                  path_params: dict = {}) -> None:
         """Route
 

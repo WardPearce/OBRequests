@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, Dict
 from httpx import Response
-from asyncio import iscoroutinefunction
+from inspect import isawaitable
 
 from ._blocking import _BlockingRequestHandler
 
@@ -17,8 +17,8 @@ class _AwaitingRequestHandler(_BlockingRequestHandler):
         super().__init__(upper, path, method_response, method_path_params)
 
     async def _handle(self, resp: Response, method: str):
-        func = super()._handle(resp, method)
-        if iscoroutinefunction(func):
+        func = super()._handle(resp, method, True)
+        if isawaitable(func):
             return await func
         else:
             return func

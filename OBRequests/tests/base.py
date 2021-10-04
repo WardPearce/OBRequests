@@ -3,6 +3,8 @@ import asynctest
 from .. import (
     OBRequests,
     Route,
+    Response,
+    ConditionalCallBack,
     CallBack,
     Get,
     Post,
@@ -13,6 +15,14 @@ from .. import (
     raise_for_status,
     codes
 )
+
+
+async def is_awaiting(resp: Response, **kwargs) -> str:
+    return "await"
+
+
+def is_blocking(resp: Response, **kwargs) -> str:
+    return "block"
 
 
 class Requests(OBRequests):
@@ -46,6 +56,18 @@ class Requests(OBRequests):
                     codes.OK: CallBack(raise_for_status)
                 }
             )
+        ]
+    )
+
+    conditional = Route(
+        "/",
+        methods=[
+            Get(responses={
+                codes.OK: ConditionalCallBack(
+                    awaiting=CallBack(is_awaiting),
+                    blocking=CallBack(is_blocking)
+                )
+            })
         ]
     )
 

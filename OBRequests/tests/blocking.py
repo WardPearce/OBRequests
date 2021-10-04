@@ -74,3 +74,9 @@ class TestBlocking(TestBase):
             }),
             object
         )
+
+    def test_conditional(self) -> None:
+        self.assertEqual(
+            self.client.conditional.get(),
+            "block"
+        )

@@ -41,6 +41,7 @@ from ._blocking import _BlockingRequestHandler
 from ._call_back import CallBack
 from ._route import Route
 from ._errors import InvalidResponse
+from ._conditional import ConditionalCallBack
 from ._methods import (
     Post,
     Get,
@@ -108,15 +109,19 @@ __all__ = [
     "InvalidResponse"
 ]
 
+__version__ = "2.0.0"
+__url__ = "https://obrequests.readthedocs.io/en/latest/"
+__description__ = "The modern way of writting HTTP requests"
+__author__ = "WardPearce"
+__author_email__ = "wardpearce@pm.me"
+__license__ = "GNU General Public License v3.0"
+
 
 class OBRequests:
-    _client: Union[AsyncClient, Client]
-    _root_resp: Dict[int, CallBack]
-    _is_awaiting: bool
-
     close_: Callable[[], Awaitable]
 
-    def __init__(self, base_url: str, responses: Dict[int, CallBack] = {},
+    def __init__(self, base_url: str,
+                 responses: Dict[int, Union[CallBack, ConditionalCallBack]] = {},  # noqa: E501
                  awaiting: bool = False, **kwargs) -> None:
         """This method is called to create a new client .
 
