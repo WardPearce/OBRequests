@@ -9,7 +9,8 @@ from OBRequests import (
     Patch,
     Delete,
     raise_for_status,
-    codes
+    codes,
+    AnyStatus
 )
 
 from .handlers import (
@@ -131,7 +132,7 @@ def create_http(base_url: str, base: "JsonPlaceholder",
         base_url=base_url,
         awaiting=awaiting,
         responses={
-            codes.NOT_FOUND: CallBack(raise_for_status)
+            AnyStatus: CallBack(raise_for_status)
         },
         globals_={
             "base": base

@@ -31,11 +31,12 @@ OBRequests is a modern typed requests library for Python 3. It aims to eliminate
 ```py
 from OBRequests import (
     OBRequests, Response, CallBack, Route,
-    Get, json, raise_for_status, HTTPStatusError
+    Get, json, raise_for_status, HTTPStatusError, AnyStatus
 )
 
 
-def custom_response(resp: Response, is_get: bool = False, **kwargs) -> None:
+def custom_response(resp: Response, is_get: bool = False,
+                    **kwargs) -> None:
     if is_get:
         print(resp.status_code)
     else:
@@ -46,7 +47,7 @@ class Requests(OBRequests):
     posts = Route(
         "/posts/{post_id}",
         responses={
-            404: CallBack(raise_for_status)
+            AnyStatus: CallBack(raise_for_status)
         },
         path_params={
             "post_id": "404_error"
