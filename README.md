@@ -1,5 +1,5 @@
 # Object-Based Requests
-OBRequests is a modern typed requests library for Python 3. It aims to eliminate common boilerplate code with creating API wrappers and make supporting async & sync python together easy!
+OBRequests is a modern typed requests library for Python 3. It aims to eliminate common boilerplate code when creating API wrappers and makes supporting async & sync python together easy!
 
 ## Index
 - [Install](#install)
