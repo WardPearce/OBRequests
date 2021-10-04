@@ -1,19 +1,19 @@
-from typing import Dict, Union
+from typing import TYPE_CHECKING
 
-from ._call_back import CallBack
-from ._conditional import ConditionalCallBack
+if TYPE_CHECKING:
+    from ._types import RESPONSES
 
 
 class Method:
     _method: str
 
-    def __init__(self, responses: Dict[int, Union[CallBack, ConditionalCallBack]] = {},  # noqa: E501
+    def __init__(self, responses: "RESPONSES" = {},  # noqa: E501
                  path_params: dict = {}) -> None:
         """Initialize the method for this request.
 
         Parameters
         ----------
-        responses : Dict[int, Union[CallBack, ConditionalCallBack]], optional
+        responses : "RESPONSES", optional
             by default {}
         path_params : dict
             by default {}

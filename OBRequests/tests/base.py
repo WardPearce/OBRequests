@@ -13,7 +13,8 @@ from .. import (
     Delete,
     json,
     raise_for_status,
-    codes
+    codes,
+    AnyStatus
 )
 
 
@@ -34,7 +35,7 @@ class Requests(OBRequests):
         "/posts/{post_id}",
         responses={
             codes.OK: CallBack(json),
-            codes.NOT_FOUND: CallBack(raise_for_status)
+            AnyStatus: CallBack(raise_for_status)
         },
         methods=[
             Get(

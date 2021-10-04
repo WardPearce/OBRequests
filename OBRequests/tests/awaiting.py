@@ -1,4 +1,5 @@
 from .base import TestBase
+from .. import HTTPStatusError
 
 
 class TestAwaiting(TestBase):
@@ -86,3 +87,9 @@ class TestAwaiting(TestBase):
             await self.client.global_var.get(),
             1
         )
+
+    async def test_any_status(self) -> None:
+        with self.assertRaises(HTTPStatusError):
+            await self.client.posts.get(path_params={
+                "post_id": "404_error"
+            })

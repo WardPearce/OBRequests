@@ -1,4 +1,4 @@
-from typing import Awaitable, Callable, Dict, Union
+from typing import TYPE_CHECKING, Awaitable, Callable
 from httpx import (
     Response, AsyncClient, Client, codes,
     BasicAuth, Timeout, DigestAuth, Cookies
@@ -42,6 +42,7 @@ from ._call_back import CallBack
 from ._route import Route
 from ._errors import InvalidResponse
 from ._conditional import ConditionalCallBack
+from ._catch_all import AnyStatus
 from ._methods import (
     Post,
     Get,
@@ -50,6 +51,9 @@ from ._methods import (
     Put,
     Patch
 )
+
+if TYPE_CHECKING:
+    from ._types import RESPONSES
 
 
 __all__ = [
@@ -63,6 +67,8 @@ __all__ = [
     "Cookies",
     "codes",
     "Timeout",
+    "AnyStatus",
+    "ConditionalCallBack",
 
     "json",
     "read",
@@ -119,11 +125,11 @@ __license__ = "GNU General Public License v3.0"
 
 class OBRequests:
     close_: Callable[[], Awaitable]
-    _root_resp: Dict[int, Union[CallBack, ConditionalCallBack]]
+    _root_resp: "RESPONSES"
     _globals: dict
 
     def __init__(self, base_url: str,
-                 responses: Dict[int, Union[CallBack, ConditionalCallBack]] = {},  # noqa: E501
+                 responses: "RESPONSES" = {},  # noqa: E501
                  globals_: dict = {}, awaiting: bool = False, **kwargs
                  ) -> None:
         """This method is called to create a new client .
@@ -131,7 +137,7 @@ class OBRequests:
         Parameters
         ----------
         base_url : URLTypes
-        responses : Dict[int, Callable[[Response], Any]], optional
+        responses : "RESPONSES", optional
             by default {}
         awaiting : bool, optional
             If client should be async or not by default False

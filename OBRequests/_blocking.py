@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Dict, Tuple
+from typing import TYPE_CHECKING, Tuple
 from httpx import Response
 
 from ._errors import InvalidResponse
@@ -11,17 +11,19 @@ from ._methods import (
     Patch
 )
 from ._conditional import ConditionalCallBack
+from ._catch_all import AnyStatus
 
 
 if TYPE_CHECKING:
-    from . import OBRequests, CallBack
+    from . import OBRequests
+    from ._types import METHOD_RESPONSES
 
 
 class _BlockingRequestHandler:
     _upper: "OBRequests"
 
     def __init__(self, upper: "OBRequests", path: str = None,
-                 method_response: Dict[str, Dict[int, "CallBack"]] = {},
+                 method_response: "METHOD_RESPONSES" = {},
                  method_path_params: dict = {}
                  ) -> None:
         self._upper = upper
@@ -32,8 +34,7 @@ class _BlockingRequestHandler:
     def _request_injects(self, kwargs: dict, method: str) -> None:
         self._upper._inject_url(kwargs, self._path)
 
-        if (method in self._method_path_params
-                and self._method_path_params[method]):
+        if self._method_path_params[method]:
             if "path_params" in kwargs:
                 kwargs["url"] = str(kwargs["url"]).format_map({
                     **self._method_path_params[method],
@@ -81,7 +82,7 @@ class _BlockingRequestHandler:
         return self._upper._client.patch(**kwargs), method  # type: ignore
 
     def _handle(self, resp: Response, method: str, is_awaiting: bool = False):
-        if method in self._method_response and self._method_response[method]:
+        if self._method_response[method]:
             responses = {
                 **self._upper._root_resp,
                 **self._method_response[method]
@@ -91,18 +92,21 @@ class _BlockingRequestHandler:
 
         if resp.status_code in responses:
             call_back = responses[resp.status_code]
-            if isinstance(call_back, ConditionalCallBack):
-                if is_awaiting:
-                    call_back = call_back._awaiting
-                else:
-                    call_back = call_back._blocking
-
-            return call_back._func(
-                resp=resp,  # type: ignore
-                **{**call_back._kwargs, "globals_": self._upper._globals}
-            )
+        elif AnyStatus in responses:
+            call_back = responses[AnyStatus]
         else:
             raise InvalidResponse(f"{resp.status_code} Client Error: Not Found for url: {resp.url} \nFor more information check: https://httpstatuses.com/{resp.status_code}")  # noqa: E501
+
+        if isinstance(call_back, ConditionalCallBack):
+            if is_awaiting:
+                call_back = call_back._awaiting
+            else:
+                call_back = call_back._blocking
+
+        return call_back._func(
+            resp=resp,  # type: ignore
+            **{**call_back._kwargs, "globals_": self._upper._globals}
+        )
 
     def post(self, **kwargs):
         """Makes a POST request to the API endpoint

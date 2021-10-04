@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Dict
+from typing import TYPE_CHECKING
 from httpx import Response
 from inspect import isawaitable
 
@@ -6,12 +6,13 @@ from ._blocking import _BlockingRequestHandler
 
 
 if TYPE_CHECKING:
-    from . import OBRequests, CallBack
+    from . import OBRequests
+    from ._types import METHOD_RESPONSES
 
 
 class _AwaitingRequestHandler(_BlockingRequestHandler):
     def __init__(self, upper: "OBRequests", path: str = None,
-                 method_response: Dict[str, Dict[int, "CallBack"]] = {},
+                 method_response: "METHOD_RESPONSES" = {},
                  method_path_params: dict = {}
                  ) -> None:
         super().__init__(upper, path, method_response, method_path_params)

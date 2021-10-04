@@ -1,4 +1,5 @@
 from .base import TestBase
+from .. import HTTPStatusError
 
 
 class TestBlocking(TestBase):
@@ -86,3 +87,9 @@ class TestBlocking(TestBase):
             self.client.global_var.get(),
             1
         )
+
+    def test_any_status(self) -> None:
+        with self.assertRaises(HTTPStatusError):
+            self.client.posts.get(path_params={
+                "post_id": "404_error"
+            })
