@@ -1,20 +1,23 @@
-from typing import AsyncGenerator, Generator, Union
+from typing import AsyncGenerator, Generator, Tuple, Union
 from OBRequests import Response
 
 from .models import (
     PostModel, ToDoModel, AlbumModel, PhotoModel, CommentModel
 )
+from .post import Post
 
 
-def post_handle(resp: Response, **kwargs) -> PostModel:
+def post_handle(resp: Response, **kwargs) -> Tuple[PostModel, Post]:
     resp.raise_for_status()
-    return PostModel(**resp.json())
+    resp_json = resp.json()
+    return (
+        PostModel(**resp_json),
+        Post(kwargs["globals_"]["base"], resp_json["id"])
+    )
 
 
 def posts_handle(resp: Response, **kwargs
-                 ) -> Union[
-                    AsyncGenerator[PostModel, None],
-                    Generator[PostModel, None, None]]:
+                 ) -> Generator[PostModel, None, None]:
     resp.raise_for_status()
     for post in resp.json():
         yield PostModel(**post)

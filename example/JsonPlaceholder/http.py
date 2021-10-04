@@ -1,3 +1,4 @@
+from typing import TYPE_CHECKING
 from OBRequests import (
     OBRequests,
     Route,
@@ -15,6 +16,9 @@ from .handlers import (
     post_handle, todo_handle, album_handle,
     photo_handle, comment_handle, posts_handle
 )
+
+if TYPE_CHECKING:
+    from . import JsonPlaceholder
 
 
 class Requests(OBRequests):
@@ -107,12 +111,14 @@ class Requests(OBRequests):
     )
 
 
-def create_http(base_url: str, awaiting: bool = False) -> Requests:
+def create_http(base_url: str, base: "JsonPlaceholder",
+                awaiting: bool = False,) -> Requests:
     """Create a Requests object from the given base_url.
 
     Parameters
     ----------
     base_url : str
+    base : JsonPlaceholder
     awaiting : bool, optional
         by default False
 
@@ -126,5 +132,8 @@ def create_http(base_url: str, awaiting: bool = False) -> Requests:
         awaiting=awaiting,
         responses={
             codes.NOT_FOUND: CallBack(raise_for_status)
+        },
+        globals_={
+            "base": base
         }
     )

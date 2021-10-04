@@ -1,6 +1,7 @@
-from typing import AsyncGenerator, Generator, Union
+from typing import Generator, Tuple
 from .http import Requests, create_http
 from .models import PostModel
+from .post import Post
 
 
 class JsonPlaceholder:
@@ -9,11 +10,14 @@ class JsonPlaceholder:
     def __init__(self, endpoint: str = "https://jsonplaceholder.typicode.com",
                  awaiting: bool = False) -> None:
         self._requests = create_http(
-            endpoint, awaiting
+            endpoint, self, awaiting
         )
 
+    def close(self):
+        return self._requests.close_()
+
     def create_post(self, post_id: int, title: str,
-                    body: str, user_id: int) -> PostModel:
+                    body: str, user_id: int) -> Tuple[PostModel, Post]:
         """Create a post.
 
         Parameters
@@ -34,21 +38,16 @@ class JsonPlaceholder:
             "userId": user_id
         })
 
-    def posts(self) -> Union[Generator[PostModel, None, None],
-                             AsyncGenerator[PostModel, None]]:
+    def posts(self) -> Generator[PostModel, None, None]:
         """Get all posts.
 
         Yields
         -------
-        Iterator[Union[
-            Generator[PostModel, None, None],
-            AsyncGenerator[PostModel, None]
-        ]]
+        PostModel
         """
-        for post in self._requests.post.get():
-            yield post
+        return self._requests.posts.get()
 
-    def post(self, post_id: int) -> PostModel:
+    def post(self, post_id: int) -> Tuple[PostModel, Post]:
         return self._requests.post.get(path_params={
             "post_id": post_id
         })

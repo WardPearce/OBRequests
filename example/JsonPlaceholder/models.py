@@ -4,8 +4,8 @@ class PostModel:
     title: str
     body: str
 
-    def __init__(self, user_id: int, id: int, title: str, body: str) -> None:
-        self.user_id = user_id
+    def __init__(self, userId: int, id: int, title: str, body: str) -> None:
+        self.user_id = userId
         self.id = id
         self.title = title
         self.body = body
@@ -17,9 +17,9 @@ class ToDoModel:
     title: str
     completed: bool
 
-    def __init__(self, user_id: int, id: int, title: str,
+    def __init__(self, userId: int, id: int, title: str,
                  completed: bool) -> None:
-        self.user_id = user_id
+        self.user_id = userId
         self.id = id
         self.title = title
         self.completed = completed
@@ -30,8 +30,8 @@ class AlbumModel:
     id: int
     title: str
 
-    def __init__(self, user_id: int, id: int, title: str) -> None:
-        self.user_id = user_id
+    def __init__(self, userId: int, id: int, title: str) -> None:
+        self.user_id = userId
         self.id = id
         self.title = title
 
@@ -43,13 +43,13 @@ class PhotoModel:
     url: str
     thumbnail_url: str
 
-    def __init__(self, album_id: int, id: int, title: str, url: str,
-                 thumbnail_url: str) -> None:
-        self.album_id = album_id
+    def __init__(self, albumId: int, id: int, title: str, url: str,
+                 thumbnailUrl: str) -> None:
+        self.album_id = albumId
         self.id = id
         self.title = title
         self.url = url
-        self.thumbnail_url = thumbnail_url
+        self.thumbnail_url = thumbnailUrl
 
 
 class CommentModel:
@@ -59,9 +59,9 @@ class CommentModel:
     email: str
     body: str
 
-    def __init__(self, post_id: int, id: int, name: str,
+    def __init__(self, postId: int, id: int, name: str,
                  email: str, body: str) -> None:
-        self.post_id = post_id
+        self.post_id = postId
         self.id = id
         self.name = name
         self.email = email
