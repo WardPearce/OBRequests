@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Awaitable, Callable
+from typing import TYPE_CHECKING, Awaitable, Callable, Union
 from httpx import (
     Response, AsyncClient, Client, codes,
     BasicAuth, Timeout, DigestAuth, Cookies
@@ -124,9 +124,19 @@ __license__ = "GNU General Public License v3.0"
 
 
 class OBRequests:
+    """
+    Attributes
+    ----------
+    close_: Callable[[], Awaitable]
+        Used to close any underlying sessions.
+    base_: Union[_BlockingRequestHandler, _AwaitingRequestHandler]
+        Interact with the base of the client.
+    """
+
     close_: Callable[[], Awaitable]
     _root_resp: "RESPONSES"
     _globals: dict
+    base_: Union[_BlockingRequestHandler, _AwaitingRequestHandler]
 
     def __init__(self, base_url: str,
                  responses: "RESPONSES" = {},

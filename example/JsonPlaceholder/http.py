@@ -5,9 +5,6 @@ from OBRequests import (
     CallBack,
     Get,
     Post,
-    Put,
-    Patch,
-    Delete,
     raise_for_status,
     codes,
     AnyStatus
@@ -43,17 +40,7 @@ class Requests(OBRequests):
         "/posts/{post_id}",
         responses={
             codes.OK: CallBack(post_handle)
-        },
-        methods=[
-            Get(),
-            Put(),
-            Patch(),
-            Delete(
-                responses={
-                    codes.OK: CallBack(raise_for_status)
-                }
-            )
-        ]
+        }
     )
 
     comments = Route(
