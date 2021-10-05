@@ -18,7 +18,7 @@ Base
 
 .. code-block:: python
 
-    from OBRequests import OBRequests, BasicAuth, json
+    from OBRequests import OBRequests, BasicAuth, CallBack, json
 
 
     class Requests(OBRequests):
@@ -121,7 +121,7 @@ What makes OBRequests unique compared to other HTTP clients is our routing & met
 
 .. code-block:: python
 
-    from OBRequests import OBRequests, CallBack, AnyStatus, BasicAuth, json
+    from OBRequests import OBRequests, Route, CallBack, AnyStatus, BasicAuth, json
 
     class Requests(OBRequests):
         # Can never start or end with a '_'
@@ -160,7 +160,7 @@ OBRequests lets you apply callbacks & define payloads per HTTP method too.
 
 .. code-block:: python
 
-    from OBRequests import OBRequests, CallBack, AnyStatus, BasicAuth, json
+    from OBRequests import OBRequests, CallBack, Route, Delete, AnyStatus, BasicAuth, json
 
     class Requests(OBRequests):
         # Can never start or end with a '_'
