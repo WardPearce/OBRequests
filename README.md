@@ -13,7 +13,7 @@ OBRequests is a modern typed requests library for Python 3 built on-top of HTTPX
 `pip3 install OBRequests>=2.0.0`
 
 ## Docs
-[obrequests.readthedocs.io](obrequests.readthedocs.io/en/latest/)
+[obrequests.readthedocs.io](https://obrequests.readthedocs.io/en/latest/)
 
 ## Features
 - Unique route typing
