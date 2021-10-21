@@ -236,13 +236,13 @@ class OBRequests:
         else:
             setattr(self, "close_", self.__close)
 
-    def __enter__(self):
+    def __enter__(self) -> "OBRequests":
         return self
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> "OBRequests":
         return self
 
-    async def __aexit__(self, exc_type, exc, tb):
+    async def __aexit__(self, exc_type, exc, tb) -> None:
         await self.close_()
 
     def __close(self) -> None:
