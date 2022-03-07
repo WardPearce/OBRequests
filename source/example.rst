@@ -21,7 +21,7 @@ Find a more advance example on our Github: https://github.com/Object-Based/Reque
 
 
     class Requests(OBRequests):
-        posts = Route(
+        posts_route = Route(
             "/posts/{post_id}",
             responses={
                 AnyStatus: CallBack(raise_for_status)
@@ -57,17 +57,17 @@ Find a more advance example on our Github: https://github.com/Object-Based/Reque
     )
 
     try:
-        request.posts.get()
+        request.posts_route.get()
+        # The same as
+        request.base_.get(url="/posts")
     except HTTPStatusError as error:
         print(error)
 
     # Prints status code
-    request.posts.get(path_params={
+    request.posts_route.get(path_params={
         "post_id": 1
     })
 
-    # Returns phased JSON
-    request.base_.get(url="/posts")
 
     # Only needed for async
     request.close_()

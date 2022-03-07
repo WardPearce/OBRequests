@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Tuple
+from typing import TYPE_CHECKING, Optional, Tuple
 from httpx import Response
 
 from ._errors import InvalidResponse
@@ -23,7 +23,7 @@ if TYPE_CHECKING:
 class _BlockingRequestHandler:
     _upper: "OBRequests"
 
-    def __init__(self, upper: "OBRequests", path: str = None,
+    def __init__(self, upper: "OBRequests", path: Optional[str] = None,
                  method_response: "METHOD_RESPONSES" = METHOD_DICT,
                  method_path_params: dict = METHOD_DICT,
                  method_kwargs: dict = METHOD_DICT

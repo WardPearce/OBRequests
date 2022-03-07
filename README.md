@@ -1,5 +1,5 @@
 # Object-Based Requests
-OBRequests is a modern typed requests library for Python 3 built on-top of HTTPX. It aims to eliminate common boilerplate code when creating API wrappers and makes supporting async & sync python together easy!
+Object-Based Requests reinvents the wheel around how HTTP requests are interfaced by developers, its built around reusability & static typing.
 
 ## Index
 - [Install](#install)
@@ -40,7 +40,7 @@ def custom_response(resp: Response, is_get: bool = False,
 
 
 class Requests(OBRequests):
-    posts = Route(
+    posts_route = Route(
         "/posts/{post_id}",
         responses={
             AnyStatus: CallBack(raise_for_status)
@@ -76,17 +76,17 @@ request = Requests(
 )
 
 try:
-    request.posts.get()
+    request.posts_route.get()
+    # The same as
+    request.base_.get(url="/posts")
 except HTTPStatusError as error:
     print(error)
 
 # Prints status code
-request.posts.get(path_params={
+request.posts_route.get(path_params={
     "post_id": 1
 })
 
-# Returns phased JSON
-request.base_.get(url="/posts")
 
 # Only needed for async
 request.close_()

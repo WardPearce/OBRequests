@@ -5,7 +5,7 @@
 
 Welcome to OBRequests's documentation!
 ======================================
-OBRequests is a modern typed requests library for Python 3 built on-top of HTTPX. It aims to eliminate common boilerplate code when creating API wrappers and makes supporting async & sync python together easy!
+Object-Based Requests reinvents the wheel around how HTTP requests are interfaced by developers, its built around reusability & static typing.
 
 HTTPX documentation can be found here: https://www.python-httpx.org/api/
 
